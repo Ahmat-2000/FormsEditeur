@@ -78,7 +78,7 @@
                deprecation="${compile.deprecation}"
                optimize="${compile.optimize}"
                encoding="${javac.encoding}"
-               includeantruntime="true"
+               includeantruntime="false"
                >
            
             <classpath refid="compile.classpath"/>
@@ -86,7 +86,7 @@
         </javac>
 
 
-        <javac srcdir="${src.test.home}" destdir="${build.test.home}"> 
+        <javac srcdir="${src.test.home}" destdir="${build.test.home}" includeantruntime="false" > 
             <classpath>
                 <pathelement location="${build.home}"/>
                 <path refid="compile.classpath"/>
