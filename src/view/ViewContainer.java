@@ -1,13 +1,35 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package view;
+
+import java.awt.Graphics;
+
+import javax.swing.JPanel;
+
+import model.FormesContainer;
+import model.observerPaterne.ModelListener;
 
 /**
  *
  * @author 21912949
  */
-public class ViewContainer {
+public class ViewContainer extends JPanel implements ModelListener{
+    FormesContainer formesContainer;
+    public ViewContainer(FormesContainer formesContainer){
+        this.formesContainer = formesContainer;
+        this.formesContainer.addModelListener(this);
+        this.add(new RectangleView());
+        this.add(new RectangleView());
+        this.add(new RectangleView());
+    }
+
+    @Override
+    public void somethingHasChanged(Object source) {
+        //this.repaint();
+        this.revalidate();
+    }
+    @Override 
+    protected void paintComponent(Graphics g) {
+        // TODO Auto-generated method stub
+        super.paintComponent(g);
+    }
     
 }
