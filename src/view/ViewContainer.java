@@ -1,9 +1,7 @@
 package view;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import model.CercleModel;
@@ -17,7 +15,6 @@ public class ViewContainer extends JPanel implements ModelListener{
     public ViewContainer(FormesContainer formesContainer){
         this.formesContainer = formesContainer;
         this.formesContainer.addModelListener(this);
-        this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         this.setLayout(null);
     }
   

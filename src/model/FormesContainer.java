@@ -3,8 +3,9 @@ package model;
 import java.util.ArrayList;
 
 import model.observerPaterne.AbstractListenableModel;
+import model.observerPaterne.ModelListener;
 
-public class FormesContainer extends AbstractListenableModel {
+public class FormesContainer extends AbstractListenableModel implements ModelListener{
     //public ArrayList<IFormes> sideContainerList ;
     public ArrayList<IFormes> mainContainerList ;
 
@@ -15,6 +16,11 @@ public class FormesContainer extends AbstractListenableModel {
     }
 
     public void addFormToMainContainer(IFormes f){
+        if (f instanceof CercleModel) {
+            ((CercleModel)f).addModelListener(this);
+        } else {
+            ((RectangleModel)f).addModelListener(this);
+        }
         this.mainContainerList.add(f);
         this.fireChange();
     }
@@ -23,7 +29,10 @@ public class FormesContainer extends AbstractListenableModel {
         this.mainContainerList.remove(f);
         this.fireChange();
     }
-  
+    @Override
+    public void somethingHasChanged(Object source) {
+        this.fireChange();
+    }
     public ArrayList<IFormes> getMainContainerList() {
         return mainContainerList;
     }

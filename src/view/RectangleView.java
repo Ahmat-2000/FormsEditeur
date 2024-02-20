@@ -8,13 +8,7 @@ public class RectangleView implements IView {
     private RectangleModel rectangleModel;
     public RectangleView(RectangleModel r){
         this.rectangleModel = r;
-        //this.rectangleModel.addModelListener(this);
     }
-    // @Override
-    // public void somethingHasChanged(Object source) {
-    //     this.repaint();
-    //     this.revalidate();
-    // }
     
     @Override
     public void dessiner(Graphics g) {
