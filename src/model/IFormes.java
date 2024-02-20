@@ -1,12 +1,14 @@
 package model;
 
+import java.awt.Color;
+
 public interface IFormes {
     public double getSurface();
     //public void resizeForm();    
     public void moveForm(int deltaX,int deltaY);
     public void moveFormX(int deltaX);
     public void moveFormY(int deltaY);
-    public void setColor(String color);
-    public String getColor();
+    public void setColor(Color color);
+    public Color getColor();
     
 }

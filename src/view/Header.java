@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -15,7 +16,10 @@ public class Header extends JPanel{
     public Header(){
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         this.setLayout(new FlowLayout(FlowLayout.CENTER,40 ,10));
-        cercle = new JButton("Create Cercle");
+
+        ImageIcon addIcon = new ImageIcon("deplacer20.png");
+        cercle = new JButton("Create Cercle",addIcon);
+        cercle.setFocusPainted(false);
         rectangle = new JButton("Create Rectangle");
         clear = new JButton("Clear");
         clear.addActionListener(new ClearBtnController());

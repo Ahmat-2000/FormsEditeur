@@ -17,22 +17,10 @@ public class ViewContainer extends JPanel implements ModelListener{
     public ViewContainer(FormesContainer formesContainer){
         this.formesContainer = formesContainer;
         this.formesContainer.addModelListener(this);
-        addForms();
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
+        this.setLayout(null);
     }
-
-    private void addForms(){
-        for (IFormes f : this.formesContainer.getMainContainerList()) {
-            if (f instanceof CercleModel) {
-                CercleModel c = (CercleModel) f;
-                this.add(new CercleView(c));
-            }else{
-                RectangleModel c = (RectangleModel) f;
-                this.add(new RectangleView(c));
-            }
-        }
-    }
+  
     @Override
     public void somethingHasChanged(Object source) {
         this.repaint();
@@ -40,8 +28,16 @@ public class ViewContainer extends JPanel implements ModelListener{
     }
     @Override 
     protected void paintComponent(Graphics g) {
-        // TODO Auto-generated method stub
         super.paintComponent(g);
+        for (IFormes forme : formesContainer.getMainContainerList()) {
+            IView c = null;
+            if(forme instanceof CercleModel){
+                c = new CercleView((CercleModel)forme);
+            }else{
+                c = new RectangleView((RectangleModel)forme);
+            }
+            c.dessiner(g);
+        }
     }
     
 }

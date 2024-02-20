@@ -4,6 +4,8 @@
  */
 package view;
 
+import java.awt.Graphics;
+
 public interface IView {
-    
+    public void dessiner(Graphics g) ;
 }
