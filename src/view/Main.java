@@ -1,18 +1,12 @@
 package view;
 
+import model.CercleModel;
 import model.FormesContainer;
 
-/**
- *
- * @author 21912949
- */
 public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         FormesContainer formesContainer = new FormesContainer();
+        formesContainer.addFormToMainContainer(new CercleModel(50, 50, 50));
         ViewContainer viewContainer = new ViewContainer(formesContainer);
         SideContainer sideContainer = new SideContainer();
         Header header = new Header();
