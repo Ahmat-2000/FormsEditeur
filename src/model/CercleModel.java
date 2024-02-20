@@ -1,15 +1,17 @@
 package model;
 
+import java.awt.Color;
+
 import model.observerPaterne.AbstractListenableModel;
 
 public class CercleModel extends AbstractListenableModel implements IFormes {
     
     private int x , y , rayon;
-    private String color;
+    private Color color;
     public CercleModel(int x, int y, int rayon) {
-        this(x, y, rayon, "red");
+        this(x, y, rayon, Color.BLACK);
     }
-    public CercleModel(int x, int y, int rayon, String color) {
+    public CercleModel(int x, int y, int rayon, Color color) {
         super();
         this.x = x;
         this.y = y;
@@ -17,13 +19,13 @@ public class CercleModel extends AbstractListenableModel implements IFormes {
         this.color = color;
     }
     @Override
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
         this.fireChange();
     }
 
     @Override
-    public String getColor() {
+    public Color getColor() {
         return this.color;
     }
 
@@ -40,7 +42,8 @@ public class CercleModel extends AbstractListenableModel implements IFormes {
     }
     @Override
     public double getSurface() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //TODO
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
     public void zoomIn(int deltaRayon){
         this.rayon += deltaRayon;
@@ -50,10 +53,6 @@ public class CercleModel extends AbstractListenableModel implements IFormes {
         this.rayon -= deltaRayon;
         this.fireChange();
     }
-    // @Override
-    // public void resizeForm() {
-    //     throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    // }
 
     @Override
     public void moveForm(int deltaX, int deltaY) {

@@ -1,12 +1,14 @@
 package model;
 
+import java.awt.Color;
+
 import model.observerPaterne.AbstractListenableModel;
 
 public class RectangleModel extends AbstractListenableModel implements IFormes {
     private int x , y , with, height;
-    private String color;
+    private Color color;
     
-    public RectangleModel(int x, int y, int with, int height, String color) {
+    public RectangleModel(int x, int y, int with, int height, Color color) {
         super();
         this.x = x;
         this.y = y;
@@ -15,17 +17,17 @@ public class RectangleModel extends AbstractListenableModel implements IFormes {
         this.color = color;
     }
     public RectangleModel(int x, int y, int with, int height) {
-        this(x, y, with, height, "red");
+        this(x, y, with, height, Color.BLACK);
     }
 
     @Override
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
         this.fireChange();
     }
 
     @Override
-    public String getColor() {
+    public Color getColor() {
         return this.color;
     }
 
@@ -44,11 +46,6 @@ public class RectangleModel extends AbstractListenableModel implements IFormes {
     public double getSurface() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    // @Override
-    // public void resizeForm() {
-    //     throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    // }
 
     @Override
     public void moveForm(int deltaX, int deltaY) {
