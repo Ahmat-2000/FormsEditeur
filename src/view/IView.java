@@ -4,10 +4,6 @@
  */
 package view;
 
-/**
- *
- * @author 21912949
- */
 public interface IView {
     
 }

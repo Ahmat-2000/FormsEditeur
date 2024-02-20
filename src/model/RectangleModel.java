@@ -1,24 +1,117 @@
 package model;
 
-/**
- *
- * @author 21912949
- */
-public class RectangleModel implements IFormes {
+import model.observerPaterne.AbstractListenableModel;
 
+public class RectangleModel extends AbstractListenableModel implements IFormes {
+    private int x , y , with, height;
+    private String color;
+    
+    public RectangleModel(int x, int y, int with, int height, String color) {
+        super();
+        this.x = x;
+        this.y = y;
+        this.with = with;
+        this.height = height;
+        this.color = color;
+    }
+    public RectangleModel(int x, int y, int with, int height) {
+        this(x, y, with, height, "red");
+    }
+
+    @Override
+    public void setColor(String color) {
+        this.color = color;
+        this.fireChange();
+    }
+
+    @Override
+    public String getColor() {
+        return this.color;
+    }
+
+    @Override
+    public void moveFormX(int deltaX) {
+        this.x += deltaX;
+        this.fireChange();
+    }
+
+    @Override
+    public void moveFormY(int deltaY) {
+       this.y += y;
+       this.fireChange();
+    }
     @Override
     public double getSurface() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public void resizeForm() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    // @Override
+    // public void resizeForm() {
+    //     throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    // }
 
     @Override
     public void moveForm(int deltaX, int deltaY) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.x += deltaX;
+        this.y += deltaY;
+        this.fireChange();
     }
     
+    /**
+     * Agrandir le rectangle sur l'axe X
+     * @param deltaWidth
+     */
+    public void zoomInWidth(int deltaWidth){
+        this.with += deltaWidth;
+        this.fireChange();
+    }
+    /**
+     * Rétrécir le rectangle sur l'axe X
+     * @param deltaWidth
+     */
+    public void zoomOutWidth(int deltaWidth){
+        this.with -= deltaWidth;
+        this.fireChange();
+    }
+
+    public void zoomInHeight(int deltaHeight){
+        this.height += deltaHeight;
+        this.fireChange();
+    }
+    public void zoomoutHeight(int deltaHeight){
+        this.height -= deltaHeight;
+        this.fireChange();
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+        this.fireChange();
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+        this.fireChange();
+    }
+    public int getHeight() {
+        return height;
+    }
+    public void setHeight(int height) {
+        this.height = height;
+        this.fireChange();
+    }
+    public int getWith() {
+        return with;
+    }
+    public void setWith(int with) {
+        this.with = with;
+        this.fireChange();
+    }
 }
