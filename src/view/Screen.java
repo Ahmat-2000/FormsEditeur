@@ -11,7 +11,7 @@ public class Screen extends JFrame{
     
     public Screen(ViewContainer viewContainer, Header header){
         setTitle("Projet annuel");
-        setIconImage(new ImageIcon("icon.png").getImage());
+        setIconImage(new ImageIcon("images/icon.png").getImage());
         setSize(800,800);
         setResizable(false);
         setLocationRelativeTo(null);
