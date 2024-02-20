@@ -1,14 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
+
+import model.observerPaterne.AbstractListenableModel;
 
 /**
  *
  * @author 21912949
  */
-public class CercleModel implements IFormes {
+public class CercleModel extends AbstractListenableModel implements IFormes {
 
     @Override
     public double getSurface() {
