@@ -18,7 +18,8 @@ public class CercleView  implements IView{
     @Override
     public void dessiner(Graphics g) {
         g.setColor(cercleModel.getColor());
-        g.fillOval(cercleModel.getX(),cercleModel.getY(),cercleModel.getRayon(),cercleModel.getRayon());
+        g.drawOval(cercleModel.getX(),cercleModel.getY(),cercleModel.getRayon(),cercleModel.getRayon());
+        // g.fillOval(cercleModel.getX(),cercleModel.getY(),cercleModel.getRayon(),cercleModel.getRayon());
         
     }    
 }

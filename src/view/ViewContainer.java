@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
 
 import javax.swing.JPanel;
 
@@ -25,9 +26,24 @@ public class ViewContainer extends JPanel implements ModelListener{
         return state;
     }
 
+    public void addListeners(MouseAdapter m){
+        this.addMouseListener(m);
+        this.addMouseMotionListener(m);
+        this.addMouseWheelListener(m);
+    }
+    public void removeListeners(MouseAdapter m){
+        this.removeMouseListener(m);
+        this.removeMouseMotionListener(m);
+        this.removeMouseWheelListener(m);
+    }
     public void setState(IViewState state) {
         this.state = state;
     }
+
+    public FormesContainer getFormesContainer() {
+        return this.formesContainer;
+    }
+
     @Override
     public void somethingHasChanged(Object source) {
         this.repaint();

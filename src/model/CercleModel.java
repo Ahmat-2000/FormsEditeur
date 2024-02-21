@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Color;
+import java.awt.Point;
 
 import model.observerPaterne.AbstractListenableModel;
 
@@ -17,6 +18,14 @@ public class CercleModel extends AbstractListenableModel implements IFormes {
         this.y = y;
         this.rayon = rayon;
         this.color = color;
+    }
+
+    // need work
+    public CercleModel(Point p1, Point p2) {
+        this.rayon = (int) Math.sqrt(this.computeDistance(p1, p2));
+        this.x = (int)(p1.getX() + this.rayon/2);
+        this.y = (int)(p1.getY() + this.rayon/2);
+        this.color = Color.BLACK;
     }
     @Override
     public void setColor(Color color) {
@@ -40,10 +49,12 @@ public class CercleModel extends AbstractListenableModel implements IFormes {
        this.y += y;
        this.fireChange();
     }
+    private double computeDistance(Point p1,Point p2){
+        return Math.pow((p1.getX() - p2.getX()), 2) + Math.pow((p1.getY() - p1.getY()), 2);
+    }
     @Override
-    public double getSurface() {
-        //TODO
-        throw new UnsupportedOperationException("Not supported yet."); 
+    public boolean onSurface(Point p) {
+        return this.computeDistance(new Point(this.x,this.y), p) <= Math.pow(this.rayon, 2);
     }
     public void zoomIn(int deltaRayon){
         this.rayon += deltaRayon;

@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Color;
+import java.awt.Point;
 
 import model.observerPaterne.AbstractListenableModel;
 
@@ -43,8 +44,11 @@ public class RectangleModel extends AbstractListenableModel implements IFormes {
        this.fireChange();
     }
     @Override
-    public double getSurface() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean onSurface(Point p){
+        if ((p.getX() >= this.x && p.getX() <= this.x+this.with) && (p.getY() >= this.y && p.getY() <= this.y+this.height)){
+            return true;
+        }
+        return false;  
     }
 
     @Override

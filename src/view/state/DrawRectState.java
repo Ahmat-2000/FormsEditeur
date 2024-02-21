@@ -6,10 +6,10 @@ import java.awt.event.MouseWheelEvent;
 
 import view.ViewContainer;
 
-public class DrawState extends MouseAdapter implements IViewState {
+public class DrawRectState extends MouseAdapter implements IViewState {
     private ViewContainer viewContainer;
 
-    public DrawState(ViewContainer viewContainer) {
+    public DrawRectState(ViewContainer viewContainer) {
         this.viewContainer = viewContainer;
         this.viewContainer.setState(this);
     }

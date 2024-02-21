@@ -25,11 +25,11 @@ public class Header extends JPanel{
         this.setBorder(BorderFactory.createLineBorder(new Color(89, 88, 87)));
         this.setLayout(new FlowLayout(FlowLayout.CENTER,80 ,10));
 
-        cercle = this.createStyledButton("Cercle", "images/addCercle.png",new CercleBtnController());
-        rectangle = this.createStyledButton("Rect", "images/addRect.png",new RectangleBtnController());
-        move = this.createStyledButton("Move", "images/hand.png",new MoveBtnController());
+        cercle = this.createStyledButton("Cercle", "images/addCercle.png",new CercleBtnController(viewContainer));
+        rectangle = this.createStyledButton("Rect", "images/addRect.png",new RectangleBtnController(viewContainer));
+        move = this.createStyledButton("Move", "images/hand.png",new MoveBtnController(viewContainer));
         remove = this.createStyledButton("Remove", "images/remove.png", new RemoveBtnController(viewContainer));
-        reset = this.createStyledButton("Reset", "images/annuler.png",new ResetBtnController());
+        reset = this.createStyledButton("Reset", "images/annuler.png",new ResetBtnController(viewContainer));
     }
     private JButton createStyledButton(String text, String fileName, ActionListener action) {
         ImageIcon Icon = new ImageIcon(fileName);

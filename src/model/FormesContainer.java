@@ -7,7 +7,7 @@ import model.observerPaterne.ModelListener;
 
 public class FormesContainer extends AbstractListenableModel implements ModelListener{
     //public ArrayList<IFormes> sideContainerList ;
-    public ArrayList<IFormes> mainContainerList ;
+    private ArrayList<IFormes> mainContainerList ;
 
     public FormesContainer() {
         super();
@@ -27,6 +27,10 @@ public class FormesContainer extends AbstractListenableModel implements ModelLis
 
     public void removeFormFromMainContainer(IFormes f){
         this.mainContainerList.remove(f);
+        this.fireChange();
+    }
+    public void clearMainContainer(){
+        this.mainContainerList.clear();
         this.fireChange();
     }
     @Override
