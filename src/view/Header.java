@@ -21,14 +21,14 @@ import controller.RemoveBtnController;
 
 public class Header extends JPanel{
     protected JButton cercle, rectangle, reset,remove,move;
-    public Header(){
+    public Header(ViewContainer viewContainer){
         this.setBorder(BorderFactory.createLineBorder(new Color(89, 88, 87)));
         this.setLayout(new FlowLayout(FlowLayout.CENTER,80 ,10));
 
         cercle = this.createStyledButton("Cercle", "images/addCercle.png",new CercleBtnController());
         rectangle = this.createStyledButton("Rect", "images/addRect.png",new RectangleBtnController());
         move = this.createStyledButton("Move", "images/hand.png",new MoveBtnController());
-        remove = this.createStyledButton("Remove", "images/remove.png", new RemoveBtnController());
+        remove = this.createStyledButton("Remove", "images/remove.png", new RemoveBtnController(viewContainer));
         reset = this.createStyledButton("Reset", "images/annuler.png",new ResetBtnController());
     }
     private JButton createStyledButton(String text, String fileName, ActionListener action) {

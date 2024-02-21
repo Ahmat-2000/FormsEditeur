@@ -9,15 +9,25 @@ import model.FormesContainer;
 import model.IFormes;
 import model.RectangleModel;
 import model.observerPaterne.ModelListener;
+import view.state.IViewState;
 
 public class ViewContainer extends JPanel implements ModelListener{
-    FormesContainer formesContainer;
+    private IViewState state;
+    private FormesContainer formesContainer;
+
     public ViewContainer(FormesContainer formesContainer){
         this.formesContainer = formesContainer;
         this.formesContainer.addModelListener(this);
+        this.state = null;
         this.setLayout(null);
     }
-  
+    public IViewState getState() {
+        return state;
+    }
+
+    public void setState(IViewState state) {
+        this.state = state;
+    }
     @Override
     public void somethingHasChanged(Object source) {
         this.repaint();
