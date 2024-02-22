@@ -5,27 +5,23 @@ import java.util.ArrayList;
 import model.observerPaterne.AbstractListenableModel;
 import model.observerPaterne.ModelListener;
 
-public class FormesContainer extends AbstractListenableModel implements ModelListener{
+public class FormContainer extends AbstractListenableModel implements ModelListener{
     //public ArrayList<IFormes> sideContainerList ;
-    private ArrayList<IFormes> mainContainerList ;
+    private ArrayList<AbstractForm> mainContainerList ;
 
-    public FormesContainer() {
+    public FormContainer() {
         super();
         //this.sideContainerList = new ArrayList<IFormes>();
-        this.mainContainerList = new ArrayList<IFormes>();
+        this.mainContainerList = new ArrayList<AbstractForm>();
     }
 
-    public void addFormToMainContainer(IFormes f){
-        if (f instanceof CercleModel) {
-            ((CercleModel)f).addModelListener(this);
-        } else {
-            ((RectangleModel)f).addModelListener(this);
-        }
+    public void addFormToMainContainer(AbstractForm f){
+        f.addModelListener(this);
         this.mainContainerList.add(f);
         this.fireChange();
     }
 
-    public void removeFormFromMainContainer(IFormes f){
+    public void removeFormFromMainContainer(IForm f){
         this.mainContainerList.remove(f);
         this.fireChange();
     }
@@ -37,8 +33,8 @@ public class FormesContainer extends AbstractListenableModel implements ModelLis
     public void somethingHasChanged(Object source) {
         this.fireChange();
     }
-    public ArrayList<IFormes> getMainContainerList() {
-        return mainContainerList;
+    public ArrayList<AbstractForm> getMainContainerList() {
+        return this.mainContainerList;
     }
     // public void addFormToSideContainer(IFormes f){
     //     this.sideContainerList.add(f);

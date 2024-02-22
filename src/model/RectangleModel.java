@@ -1,118 +1,24 @@
 package model;
 
 import java.awt.Color;
-import java.awt.Point;
+import java.awt.Graphics;
 
-import model.observerPaterne.AbstractListenableModel;
-
-public class RectangleModel extends AbstractListenableModel implements IFormes {
-    private int x , y , with, height;
-    private Color color;
+public class RectangleModel extends AbstractForm  {
     
-    public RectangleModel(int x, int y, int with, int height, Color color) {
-        super();
-        this.x = x;
-        this.y = y;
-        this.with = with;
-        this.height = height;
-        this.color = color;
+    public RectangleModel(int x, int y, int width, int height, Color color) {
+        super(x, y, width, height, color);
     }
-    public RectangleModel(int x, int y, int with, int height) {
-        this(x, y, with, height, Color.BLACK);
-    }
-
-    @Override
-    public void setColor(Color color) {
-        this.color = color;
-        this.fireChange();
-    }
-
-    @Override
-    public Color getColor() {
-        return this.color;
-    }
-
-    @Override
-    public void moveFormX(int deltaX) {
-        this.x += deltaX;
-        this.fireChange();
-    }
-
-    @Override
-    public void moveFormY(int deltaY) {
-       this.y += y;
-       this.fireChange();
-    }
-    @Override
-    public boolean onSurface(Point p){
-        if ((p.getX() >= this.x && p.getX() <= this.x+this.with) && (p.getY() >= this.y && p.getY() <= this.y+this.height)){
-            return true;
-        }
-        return false;  
-    }
-
-    @Override
-    public void moveForm(int deltaX, int deltaY) {
-        this.x += deltaX;
-        this.y += deltaY;
-        this.fireChange();
+    public RectangleModel(int x, int y, int width, int height) {
+        this(x, y, width, height, Color.BLACK);
     }
     
-    /**
-     * Agrandir le rectangle sur l'axe X
-     * @param deltaWidth
-     */
-    public void zoomInWidth(int deltaWidth){
-        this.with += deltaWidth;
-        this.fireChange();
+    public String toString(){
+        return "Rectangle : x = " + x + ", y = " + y + ", endPointX = "+ (x+width)+ ", endPointX = "+ (y+height);
     }
-    /**
-     * Rétrécir le rectangle sur l'axe X
-     * @param deltaWidth
-     */
-    public void zoomOutWidth(int deltaWidth){
-        this.with -= deltaWidth;
-        this.fireChange();
-    }
-
-    public void zoomInHeight(int deltaHeight){
-        this.height += deltaHeight;
-        this.fireChange();
-    }
-    public void zoomoutHeight(int deltaHeight){
-        this.height -= deltaHeight;
-        this.fireChange();
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-        this.fireChange();
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-        this.fireChange();
-    }
-    public int getHeight() {
-        return height;
-    }
-    public void setHeight(int height) {
-        this.height = height;
-        this.fireChange();
-    }
-    public int getWith() {
-        return with;
-    }
-    public void setWith(int with) {
-        this.with = with;
-        this.fireChange();
+    @Override
+    public void drawForm(Graphics g) {
+        g.setColor(this.getColor());
+        g.drawRect(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        // g.fillRect(this.getX(),this.getY(),this.getWith(),this.getHeight());
     }
 }

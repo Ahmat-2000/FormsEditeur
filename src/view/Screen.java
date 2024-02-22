@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 public class Screen extends JFrame{
     
-    public Screen(ViewContainer viewContainer, Header header){
+    public Screen(ViewFormContainer viewContainer, Header header){
         setTitle("Projet annuel");
         setIconImage(new ImageIcon("images/icon.png").getImage());
         setSize(800,800);

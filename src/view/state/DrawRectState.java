@@ -2,64 +2,45 @@ package view.state;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
 
-import view.ViewContainer;
+import model.RectangleModel;
+import view.ViewFormContainer;
 
-public class DrawRectState extends MouseAdapter implements IViewState {
-    private ViewContainer viewContainer;
-
-    public DrawRectState(ViewContainer viewContainer) {
+public class DrawRectState extends MouseAdapter {
+    private ViewFormContainer viewContainer;
+    private int x1,x2,y1,y2;
+    private RectangleModel rectangle;
+    public DrawRectState(ViewFormContainer viewContainer) {
         this.viewContainer = viewContainer;
-        this.viewContainer.setState(this);
     }
-    
-    @Override
-    //Invoked when the mouse button has been clicked (pressed and released) on a component.
-    public void mouseClicked(MouseEvent e) {
-        
-    }
-    
     @Override
     // Invoked when a mouse button has been pressed on a component.
     public void mousePressed(MouseEvent e) {
-        //TODO
+        x1 = e.getX();
+        y1 = e.getY();
+        rectangle = new RectangleModel(x1,y1, 0,0);
+        this.viewContainer.getFormesContainer().addFormToMainContainer(rectangle);
     }
- 
-    @Override
-    // Invoked when a mouse button has been released on a component.
-    public void mouseReleased(MouseEvent e) {
-        //TODO
-    }
- 
-    @Override
-    //Invoked when the mouse enters a component.
-    public void mouseEntered(MouseEvent e) {
-        //TODO
-    }
- 
-    @Override
-    // Invoked when the mouse exits a component.
-    public void mouseExited(MouseEvent e) {
-        //TODO
-    }
- 
-    @Override
-    // Invoked when the mouse wheel is rotated.
-    public void mouseWheelMoved(MouseWheelEvent e) {
-        //TODO
-    }
- 
     @Override
     // Invoked when a mouse button is pressed on a component and then dragged.
     public void mouseDragged(MouseEvent e) {
-        //TODO
+        x2 = e.getX(); y2 = e.getY();
+        int width = Math.abs(x1-x2);
+        int height = Math.abs(y1-y2);
+        rectangle.setWidth(width);
+        rectangle.setHeight(height);
     }
- 
     @Override
-    // Invoked when the mouse cursor has been moved onto a component but no buttons have been pushed.
-    public void mouseMoved(MouseEvent e) {
-        //TODO
+    // Invoked when a mouse button has been released on a component.
+    public void mouseReleased(MouseEvent e) {
+       if (rectangle.computeDistance(x1, y1, e.getX(),e.getY()) <= 20) {
+            this.viewContainer.getFormesContainer().removeFormFromMainContainer(rectangle);
+       }
     }
-
+    @Override
+    // Invoked when the mouse exits a component.
+    public void mouseExited(MouseEvent e) {
+        //this.viewContainer.setState(null);
+        //this.viewContainer.removeListeners(this);
+    }
 }

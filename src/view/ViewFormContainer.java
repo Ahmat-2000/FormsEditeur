@@ -5,24 +5,22 @@ import java.awt.event.MouseAdapter;
 
 import javax.swing.JPanel;
 
-import model.CercleModel;
-import model.FormesContainer;
-import model.IFormes;
-import model.RectangleModel;
+import model.FormContainer;
+import model.IForm;
 import model.observerPaterne.ModelListener;
-import view.state.IViewState;
 
-public class ViewContainer extends JPanel implements ModelListener{
-    private IViewState state;
-    private FormesContainer formesContainer;
 
-    public ViewContainer(FormesContainer formesContainer){
+public class ViewFormContainer extends JPanel implements ModelListener{
+    private MouseAdapter state;
+    private FormContainer formesContainer;
+
+    public ViewFormContainer(FormContainer formesContainer){
         this.formesContainer = formesContainer;
         this.formesContainer.addModelListener(this);
         this.state = null;
         this.setLayout(null);
     }
-    public IViewState getState() {
+    public MouseAdapter getState() {
         return state;
     }
 
@@ -36,11 +34,11 @@ public class ViewContainer extends JPanel implements ModelListener{
         this.removeMouseMotionListener(m);
         this.removeMouseWheelListener(m);
     }
-    public void setState(IViewState state) {
+    public void setState(MouseAdapter state) {
         this.state = state;
     }
 
-    public FormesContainer getFormesContainer() {
+    public FormContainer getFormesContainer() {
         return this.formesContainer;
     }
 
@@ -52,14 +50,8 @@ public class ViewContainer extends JPanel implements ModelListener{
     @Override 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (IFormes forme : formesContainer.getMainContainerList()) {
-            IView c = null;
-            if(forme instanceof CercleModel){
-                c = new CercleView((CercleModel)forme);
-            }else{
-                c = new RectangleView((RectangleModel)forme);
-            }
-            c.dessiner(g);
+        for (IForm forme : formesContainer.getMainContainerList()) {
+            forme.drawForm(g);
         }
     }
     

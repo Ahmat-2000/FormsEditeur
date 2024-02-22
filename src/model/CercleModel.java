@@ -1,102 +1,47 @@
 package model;
 
 import java.awt.Color;
-import java.awt.Point;
+import java.awt.Graphics;
 
-import model.observerPaterne.AbstractListenableModel;
-
-public class CercleModel extends AbstractListenableModel implements IFormes {
-    
-    private int x , y , rayon;
-    private Color color;
-    public CercleModel(int x, int y, int rayon) {
-        this(x, y, rayon, Color.BLACK);
+public class CercleModel extends AbstractForm {
+    public CercleModel(int x, int y, int diameter) {
+        this(x, y, diameter, Color.BLACK);
     }
-    public CercleModel(int x, int y, int rayon, Color color) {
-        super();
-        this.x = x;
-        this.y = y;
-        this.rayon = rayon;
-        this.color = color;
+    public CercleModel(int x, int y, int diameter, Color color) {
+        super(x,y,diameter,diameter,color);
     }
-
-    // need work
-    public CercleModel(Point p1, Point p2) {
-        this.rayon = (int) Math.sqrt(this.computeDistance(p1, p2));
-        this.x = (int)(p1.getX() + this.rayon/2);
-        this.y = (int)(p1.getY() + this.rayon/2);
-        this.color = Color.BLACK;
+    public CercleModel(int x1,int y1, int x2, int y2) {
+        this(x2, y1, 0);
+        this.width = this.computeDistance(x1,y1,x2,y2);
     }
     @Override
-    public void setColor(Color color) {
-        this.color = color;
+    public void zoomInWidth(int deltaWidth){
+        this.width += deltaWidth;
+        this.height += deltaWidth;
         this.fireChange();
     }
 
     @Override
-    public Color getColor() {
-        return this.color;
-    }
-
-    @Override
-    public void moveFormX(int deltaX) {
-        this.x += deltaX;
+    public void zoomOutWidth(int deltaWidth){
+        this.width -= deltaWidth;
+        this.height -= deltaWidth;
         this.fireChange();
-    }
-
-    @Override
-    public void moveFormY(int deltaY) {
-       this.y += y;
-       this.fireChange();
-    }
-    private double computeDistance(Point p1,Point p2){
-        return Math.pow((p1.getX() - p2.getX()), 2) + Math.pow((p1.getY() - p1.getY()), 2);
     }
     @Override
-    public boolean onSurface(Point p) {
-        return this.computeDistance(new Point(this.x,this.y), p) <= Math.pow(this.rayon, 2);
-    }
-    public void zoomIn(int deltaRayon){
-        this.rayon += deltaRayon;
+    public void setWidth(int width) {
+        this.width = width;
+        this.height = width;
         this.fireChange();
     }
-    public void zoomOut(int deltaRayon){
-        this.rayon -= deltaRayon;
-        this.fireChange();
+    public String toString(){
+        return "Cercle : x = " + x + ", y = " + y + ", diametre = "+ width;
     }
-
     @Override
-    public void moveForm(int deltaX, int deltaY) {
-        this.x += deltaX;
-        this.y += deltaY;
-        this.fireChange();
+    public void drawForm(Graphics g) {
+        g.setColor(Color.red);
+        g.drawRect(this.getX(),this.getY(),this.getWidth(),this.getWidth());
+        g.setColor(this.getColor());
+        g.drawOval(this.getX(),this.getY(),this.getWidth(),this.getWidth());
+        // g.fillOval(this.getX(),this.getY(),this.getWidth(),this.getWidth());
     }
-     
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-        this.fireChange();
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-        this.fireChange();
-    }
-
-    public int getRayon() {
-        return rayon;
-    }
-
-    public void setRayon(int rayon) {
-        this.rayon = rayon;
-        this.fireChange();
-    }   
-
 }
