@@ -1,4 +1,4 @@
-package model.command;
+package model.commandPattern;
 
 import java.util.ArrayList;
 
@@ -13,22 +13,25 @@ public class ResetCommand implements ICommand{
         this.oldFormContainer = oldFormContainer;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void executeCommand() {
-        this.formList = (ArrayList<AbstractForm>) this.oldFormContainer.getMainContainerList().clone();
+        this.formList = this.oldFormContainer.copyOfList();
         this.oldFormContainer.clearMainContainer();
-        CommandHistory.getCommandsList().push(this);
+        CommandHistory.getUndoList().push(this);
+        CommandHistory.getRedoList().clear();
     }
 
     @Override
     public void undo() {
         this.oldFormContainer.setMainContainerList(this.formList);
+        CommandHistory.getRedoList().push(this);
     }
 
     @Override
     public void redo() {
-       
+        this.formList = this.oldFormContainer.copyOfList();
+        this.oldFormContainer.clearMainContainer();
+        CommandHistory.getUndoList().push(this);
     }
     
 }

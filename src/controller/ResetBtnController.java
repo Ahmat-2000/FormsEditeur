@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import model.FormContainer;
-import model.command.ResetCommand;
+import model.commandPattern.ResetCommand;
 import view.ViewFormContainer;
 
 public class ResetBtnController implements ActionListener{

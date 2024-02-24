@@ -1,4 +1,4 @@
-package model.observerPaterne;
+package model.observerPattern;
 
 public interface ListenableModel {
     void addModelListener(ModelListener l);

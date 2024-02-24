@@ -1,4 +1,4 @@
-package model.observerPaterne;
+package model.observerPattern;
 /**
  * Cette interfce est implementé par les vues qui doivent écouter le modèle.
  */

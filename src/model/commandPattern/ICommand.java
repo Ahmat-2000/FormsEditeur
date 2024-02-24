@@ -1,4 +1,4 @@
-package model.command;
+package model.commandPattern;
 
 public interface ICommand {
     public void executeCommand();

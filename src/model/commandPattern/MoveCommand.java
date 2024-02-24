@@ -1,4 +1,4 @@
-package model.command;
+package model.commandPattern;
 
 import model.AbstractForm;
 
@@ -16,16 +16,19 @@ public class MoveCommand implements ICommand{
     @Override
     public void executeCommand() {
         form.moveForm(x,y);
-        CommandHistory.getCommandsList().push(this);
+        CommandHistory.getUndoList().push(this);
+        CommandHistory.getRedoList().clear();
     }
 
     @Override
     public void undo() {
         form.moveForm(oldX, oldY);
+        CommandHistory.getRedoList().push(this);
     }
 
     @Override
     public void redo() {
-       
+        form.moveForm(x,y);
+        CommandHistory.getUndoList().push(this);
     }
 }

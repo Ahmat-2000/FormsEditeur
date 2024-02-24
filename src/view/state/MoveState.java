@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 
 import model.AbstractForm;
 import model.FormContainer;
-import model.command.MoveCommand;
+import model.commandPattern.MoveCommand;
 
 public class MoveState extends MouseAdapter  {
     private FormContainer formContainer;

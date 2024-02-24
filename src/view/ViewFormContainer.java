@@ -9,7 +9,7 @@ import model.AbstractForm;
 import model.CercleModel;
 import model.FormContainer;
 import model.RectangleModel;
-import model.observerPaterne.ModelListener;
+import model.observerPattern.ModelListener;
 
 
 public class ViewFormContainer extends JPanel implements ModelListener{

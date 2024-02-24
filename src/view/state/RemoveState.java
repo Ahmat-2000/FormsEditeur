@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 
 import model.AbstractForm;
 import model.FormContainer;
-import model.command.RemoveCommand;
+import model.commandPattern.RemoveCommand;
 
 public class RemoveState extends MouseAdapter {
     private FormContainer formContainer;

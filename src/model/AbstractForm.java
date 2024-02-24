@@ -2,7 +2,7 @@ package model;
 
 import java.awt.Color;
 
-import model.observerPaterne.AbstractListenableModel;
+import model.observerPattern.AbstractListenableModel;
 
 public abstract class AbstractForm extends AbstractListenableModel implements IForm {
     protected int x , y , width, height;

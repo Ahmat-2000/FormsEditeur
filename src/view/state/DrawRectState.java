@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 
 import model.FormContainer;
 import model.RectangleModel;
-import model.command.CreateCommand;
+import model.commandPattern.CreateCommand;
 
 public class DrawRectState extends MouseAdapter {
     private FormContainer formContainer;

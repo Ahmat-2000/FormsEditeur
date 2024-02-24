@@ -14,6 +14,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
 import controller.BtnController;
+import controller.RedoBtnController;
 import controller.ResetBtnController;
 import controller.UndoBtnController;
 import model.FormContainer;
@@ -33,7 +34,7 @@ public class Header extends JPanel{
         move = this.createStyledButton("Move", "images/hand.png",new BtnController(viewContainer,new MoveState(formContainer)));
         remove = this.createStyledButton("Remove", "images/remove.png",new BtnController(viewContainer,new RemoveState(formContainer)));
         undo = this.createStyledButton("Undo", "images/undo.png",new UndoBtnController());
-        redo = this.createStyledButton("Redo", "images/redo.png",null);
+        redo = this.createStyledButton("Redo", "images/redo.png",new RedoBtnController());
         reset = this.createStyledButton("Reset", "images/reset.png",new ResetBtnController(viewContainer,formContainer));
     }
     private JButton createStyledButton(String text, String fileName, ActionListener action) {

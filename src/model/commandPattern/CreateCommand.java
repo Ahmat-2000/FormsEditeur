@@ -1,4 +1,4 @@
-package model.command;
+package model.commandPattern;
 
 import model.AbstractForm;
 import model.FormContainer;
@@ -14,16 +14,19 @@ public class CreateCommand implements ICommand{
     @Override
     public void executeCommand() {
         this.formContainer.addFormToMainContainer(form);
-        CommandHistory.getCommandsList().push(this);
+        CommandHistory.getUndoList().push(this);
+        CommandHistory.getRedoList().clear();
     }
 
     @Override
     public void undo() {
         this.formContainer.removeFormFromMainContainer(form);
+        CommandHistory.getRedoList().push(this);
     }
 
     @Override
     public void redo() {
-       
+        this.formContainer.addFormToMainContainer(form);
+        CommandHistory.getUndoList().push(this);
     }
 }
