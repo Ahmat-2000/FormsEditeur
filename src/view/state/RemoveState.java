@@ -3,33 +3,36 @@ package view.state;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import model.IForm;
-import view.ViewFormContainer;
+import model.AbstractForm;
+import model.FormContainer;
+import model.command.RemoveCommand;
 
 public class RemoveState extends MouseAdapter {
-    private ViewFormContainer viewContainer;
+    private FormContainer formContainer;
 
-    public RemoveState(ViewFormContainer viewContainer) {
-        this.viewContainer = viewContainer;
+    public RemoveState(FormContainer formContainer) {
+        this.formContainer = formContainer;
     }
     
     @Override
     //Invoked when the mouse button has been clicked (pressed and released) on a component.
     public void mouseClicked(MouseEvent e) {
-        IForm tmp = null;
-        for (IForm f : this.viewContainer.getFormesContainer().getMainContainerList()) {
+        AbstractForm tmp = null;
+        for (AbstractForm f : this.formContainer.getMainContainerList()) {
             if (f.onSurface(e.getX(),e.getY())) {
                 tmp = f;
                 break;
             }
         }
-        this.viewContainer.getFormesContainer().removeFormFromMainContainer(tmp);
-        //this.viewContainer.removeListeners(this);
+        if(tmp != null){
+            RemoveCommand command = new RemoveCommand(tmp,this.formContainer);
+            command.executeCommand();
+        }
     }
     @Override
     // Invoked when the mouse exits a component.
     public void mouseExited(MouseEvent e) {
-        //this.viewContainer.setState(null);
-        //this.viewContainer.removeListeners(this);
+        //this.formContainer.setState(null);
+        //this.formContainer.removeListeners(this);
     }
 }

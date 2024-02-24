@@ -5,19 +5,20 @@ import java.awt.event.MouseAdapter;
 
 import javax.swing.JPanel;
 
+import model.AbstractForm;
+import model.CercleModel;
 import model.FormContainer;
-import model.IForm;
+import model.RectangleModel;
 import model.observerPaterne.ModelListener;
 
 
 public class ViewFormContainer extends JPanel implements ModelListener{
-    private MouseAdapter state;
+    private MouseAdapter state = null;
     private FormContainer formesContainer;
 
     public ViewFormContainer(FormContainer formesContainer){
         this.formesContainer = formesContainer;
         this.formesContainer.addModelListener(this);
-        this.state = null;
         this.setLayout(null);
     }
     public MouseAdapter getState() {
@@ -38,9 +39,9 @@ public class ViewFormContainer extends JPanel implements ModelListener{
         this.state = state;
     }
 
-    public FormContainer getFormesContainer() {
-        return this.formesContainer;
-    }
+    // public FormContainer getFormesContainer() {
+    //     return this.formesContainer;
+    // }
 
     @Override
     public void somethingHasChanged(Object source) {
@@ -50,8 +51,14 @@ public class ViewFormContainer extends JPanel implements ModelListener{
     @Override 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (IForm forme : formesContainer.getMainContainerList()) {
-            forme.drawForm(g);
+        for (AbstractForm forme : formesContainer.getMainContainerList()) {
+            IView c = null;
+            if(forme instanceof CercleModel){
+                c = new CercleView((CercleModel)forme);
+            }else{
+                c = new RectangleView((RectangleModel)forme);
+            }
+            c.dessiner(g);
         }
     }
     

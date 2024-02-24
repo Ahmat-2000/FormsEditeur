@@ -1,7 +1,6 @@
 package model;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 public class CercleModel extends AbstractForm {
     public CercleModel(int x, int y, int diameter) {
@@ -36,12 +35,12 @@ public class CercleModel extends AbstractForm {
     public String toString(){
         return "Cercle : x = " + x + ", y = " + y + ", diametre = "+ width;
     }
-    @Override
-    public void drawForm(Graphics g) {
-        g.setColor(Color.red);
-        g.drawRect(this.getX(),this.getY(),this.getWidth(),this.getWidth());
-        g.setColor(this.getColor());
-        g.drawOval(this.getX(),this.getY(),this.getWidth(),this.getWidth());
-        // g.fillOval(this.getX(),this.getY(),this.getWidth(),this.getWidth());
-    }
+    // @Override
+    // public void drawForm(Graphics g) {
+    //     g.setColor(Color.red);
+    //     g.drawRect(this.getX(),this.getY(),this.getWidth(),this.getWidth());
+    //     g.setColor(this.getColor());
+    //     g.drawOval(this.getX(),this.getY(),this.getWidth(),this.getWidth());
+    //     // g.fillOval(this.getX(),this.getY(),this.getWidth(),this.getWidth());
+    // }
 }

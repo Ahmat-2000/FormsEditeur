@@ -1,7 +1,6 @@
 package model;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 public class RectangleModel extends AbstractForm  {
     
@@ -15,10 +14,10 @@ public class RectangleModel extends AbstractForm  {
     public String toString(){
         return "Rectangle : x = " + x + ", y = " + y + ", endPointX = "+ (x+width)+ ", endPointX = "+ (y+height);
     }
-    @Override
-    public void drawForm(Graphics g) {
-        g.setColor(this.getColor());
-        g.drawRect(this.getX(),this.getY(),this.getWidth(),this.getHeight());
-        // g.fillRect(this.getX(),this.getY(),this.getWith(),this.getHeight());
-    }
+    // @Override
+    // public void drawForm(Graphics g) {
+    //     g.setColor(this.getColor());
+    //     g.drawRect(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+    //     // g.fillRect(this.getX(),this.getY(),this.getWith(),this.getHeight());
+    // }
 }

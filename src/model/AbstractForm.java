@@ -1,7 +1,6 @@
 package model;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 import model.observerPaterne.AbstractListenableModel;
 
@@ -16,15 +15,6 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
         this.width = width;
         this.height = height;
         this.color = color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-        this.fireChange();
-    }
-
-    public Color getColor() {
-        return this.color;
     }
 
     @Override
@@ -96,5 +86,5 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
         this.width = width;
         this.fireChange();
     }
-    public abstract void drawForm(Graphics g);
+   // public abstract void drawForm(Graphics g);
 }
