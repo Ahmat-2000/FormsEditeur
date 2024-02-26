@@ -5,10 +5,7 @@ public interface IForm {
     public void moveForm(int deltaX,int deltaY);
     public void moveFormX(int deltaX);
     public void moveFormY(int deltaY);
-
-    public void zoomInWidth(int deltaWidth);
-    public void zoomOutWidth(int deltaWidth);
-    public void zoomInHeight(int deltaHeight);
-    public void zoomoutHeight(int deltaHeight);
-    // public void drawForm(Graphics g);    
+    public void resize(int x,int y);
+    public String getName();  
+    public boolean collusion(AbstractForm f);  
 }

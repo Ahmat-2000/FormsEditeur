@@ -29,10 +29,4 @@ public class RemoveState extends MouseAdapter {
             command.executeCommand();
         }
     }
-    @Override
-    // Invoked when the mouse exits a component.
-    public void mouseExited(MouseEvent e) {
-        //this.formContainer.setState(null);
-        //this.formContainer.removeListeners(this);
-    }
 }

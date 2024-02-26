@@ -38,31 +38,32 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
         this.y = deltaY;
         this.fireChange();
     }
+    @Override
+    public boolean collusion(AbstractForm f){
+/*          // if rectangle has area 0, no overlap
+         if (l1.x == r1.x || l1.y == r1.y || r2.x == l2.x || l2.y == r2.y)
+         return false;
+  
+        // If one rectangle is on left side of other 
+        if (l1.x > r2.x || l2.x > r1.x) {
+            return false;
+        }
 
-    public void zoomInWidth(int deltaWidth){
-        this.width += deltaWidth;
-        this.fireChange();
-    }
-    /**
-     * Rétrécir le rectangle sur l'axe X
-     * @param deltaWidth
-     */
-    @Override
-    public void zoomOutWidth(int deltaWidth){
-        this.width -= deltaWidth;
-        this.fireChange();
-    }
-    @Override
-    public void zoomInHeight(int deltaHeight){
-        this.height += deltaHeight;
-        this.fireChange();
-    }
-    @Override
-    public void zoomoutHeight(int deltaHeight){
-        this.height -= deltaHeight;
-        this.fireChange();
-    }
+        // If one rectangle is above other 
+        if (r1.y > l2.y || r2.y > l1.y) {
+            return false;
+        }
 
+        return true; */
+        if (this.x + this.width >= f.getX() &&     
+            this.x <= f.getX() + f.getWidth() &&       
+            this.y + this.height >= f.getY() &&      
+            this.y <= f.getY() + f.getHeight())
+        {
+            return true;
+        }
+        return false;
+    }
     public int computeDistance(int x1,int y1, int x2, int y2){
         return (int) Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
     }
@@ -86,5 +87,6 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
         this.width = width;
         this.fireChange();
     }
-   // public abstract void drawForm(Graphics g);
+   public abstract String getName();
+   public abstract void resize(int x, int y);
 }

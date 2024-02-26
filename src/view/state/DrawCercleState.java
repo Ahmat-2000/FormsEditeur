@@ -3,16 +3,17 @@ package view.state;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import model.AbstractForm;
 import model.CercleModel;
 import model.FormContainer;
 import model.commandPattern.CreateCommand;
 
 public class DrawCercleState extends MouseAdapter{
-    private FormContainer formContainer;
+    private FormContainer formesContainer;
     private int x1,x2,y1,y2;
     private CercleModel cercle;
-    public DrawCercleState(FormContainer formContainer) {
-        this.formContainer = formContainer;
+    public DrawCercleState(FormContainer formesContainer) {
+        this.formesContainer = formesContainer;
     }
    
     @Override
@@ -21,7 +22,7 @@ public class DrawCercleState extends MouseAdapter{
         x1 = e.getX();
         y1 = e.getY();
         cercle = new CercleModel(x1,y1, 0);
-        this.formContainer.addFormToMainContainer(cercle);
+        this.formesContainer.addFormToMainContainer(cercle);
     }
 
     @Override
@@ -35,9 +36,18 @@ public class DrawCercleState extends MouseAdapter{
     @Override
     // Invoked when a mouse button has been released on a component.
     public void mouseReleased(MouseEvent e) {
-        this.formContainer.removeFormFromMainContainer(cercle);
-        if (cercle.computeDistance(x1, y1, e.getX(),e.getY()) >= 20) {
-            CreateCommand command = new CreateCommand(cercle, formContainer);
+        boolean colision = false;
+        if (cercle != null) {
+            this.formesContainer.removeFormFromMainContainer(cercle);
+            for (AbstractForm fo : this.formesContainer.getMainContainerList()) {
+                if (fo != cercle && cercle.collusion(fo)) {
+                    colision = true;
+                    break;
+                }  
+            }
+        }
+        if (cercle != null && colision == false && cercle.computeDistance(x1, y1, e.getX(),e.getY()) >= 20 ) {
+            CreateCommand command = new CreateCommand(cercle, formesContainer);
             command.executeCommand();
         }
     }

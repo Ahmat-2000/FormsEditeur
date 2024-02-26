@@ -8,10 +8,6 @@ import model.commandPattern.ICommand;
 
 
 public class RedoBtnController implements ActionListener{
-    public RedoBtnController() {
-
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!CommandHistory.getRedoList().empty()) {

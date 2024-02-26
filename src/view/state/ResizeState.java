@@ -5,13 +5,13 @@ import java.awt.event.MouseEvent;
 
 import model.AbstractForm;
 import model.FormContainer;
-import model.commandPattern.MoveCommand;
+import model.commandPattern.ResizeCommand;
 
-public class MoveState extends MouseAdapter  {
+public class ResizeState extends MouseAdapter  {
     private FormContainer formContainer;
-    private int endX, endY,startX,startY;
+    private int width,height;
     private AbstractForm form;
-    public MoveState(FormContainer formContainer) {
+    public ResizeState(FormContainer formContainer) {
         this.formContainer = formContainer;
     }
     @Override
@@ -21,8 +21,8 @@ public class MoveState extends MouseAdapter  {
         for (AbstractForm f : this.formContainer.getMainContainerList()) {
             if (f.onSurface(e.getX(),e.getY())) {
                 form = f;
-                startX = form.getX(); 
-                startY = form.getY();
+                this.width = f.getWidth(); 
+                this.height = f.getHeight();
                 break;
             }
         }
@@ -30,9 +30,8 @@ public class MoveState extends MouseAdapter  {
     @Override
     // Invoked when a mouse button is pressed on a component and then dragged.
     public void mouseDragged(MouseEvent e) {
-        endX = e.getX(); endY = e.getY();
         if (form != null) {
-            form.moveForm(endX,endY);
+            form.resize(e.getX(), e.getY());
         }
     }
     @Override
@@ -42,6 +41,8 @@ public class MoveState extends MouseAdapter  {
         if (form != null) {
             for (AbstractForm fo : this.formContainer.getMainContainerList()) {
                 if (fo != form && form.collusion(fo)) {
+                    form.setWidth(width);
+                    form.setHeight(height);
                     colision = true;
                     break;
                 }  
@@ -49,8 +50,9 @@ public class MoveState extends MouseAdapter  {
         }
         if (form != null && colision == false) {
             // on annule le move avant de faire la commande
-            form.moveForm(startX,startY);
-            MoveCommand command = new MoveCommand(form, e.getX(), e.getY());
+            form.setWidth(width);
+            form.setHeight(height);
+            ResizeCommand command = new ResizeCommand(form, e.getX(), e.getY());
             command.executeCommand();
         }
     }

@@ -14,33 +14,18 @@ public class CercleModel extends AbstractForm {
         this.width = this.computeDistance(x1,y1,x2,y2);
     }
     @Override
-    public void zoomInWidth(int deltaWidth){
-        this.width += deltaWidth;
-        this.height += deltaWidth;
-        this.fireChange();
-    }
-
-    @Override
-    public void zoomOutWidth(int deltaWidth){
-        this.width -= deltaWidth;
-        this.height -= deltaWidth;
-        this.fireChange();
-    }
-    @Override
     public void setWidth(int width) {
         this.width = width;
         this.height = width;
         this.fireChange();
     }
-    public String toString(){
-        return "Cercle : x = " + x + ", y = " + y + ", diametre = "+ width;
+    public String getName(){
+        return "cercle";
     }
-    // @Override
-    // public void drawForm(Graphics g) {
-    //     g.setColor(Color.red);
-    //     g.drawRect(this.getX(),this.getY(),this.getWidth(),this.getWidth());
-    //     g.setColor(this.getColor());
-    //     g.drawOval(this.getX(),this.getY(),this.getWidth(),this.getWidth());
-    //     // g.fillOval(this.getX(),this.getY(),this.getWidth(),this.getWidth());
-    // }
+    @Override
+    public void resize(int x,int y){
+        this.width  = Math.abs(this.x - x);
+        this.height = this.width;
+        this.fireChange();
+    }
 }

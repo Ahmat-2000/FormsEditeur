@@ -3,6 +3,7 @@ package view.state;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import model.AbstractForm;
 import model.FormContainer;
 import model.RectangleModel;
 import model.commandPattern.CreateCommand;
@@ -31,13 +32,23 @@ public class DrawRectState extends MouseAdapter {
         rectangle.setWidth(width);
         rectangle.setHeight(height);
     }
-    @Override
+      @Override
     // Invoked when a mouse button has been released on a component.
     public void mouseReleased(MouseEvent e) {
-        this.formContainer.removeFormFromMainContainer(rectangle);
-        if (rectangle.computeDistance(x1, y1, e.getX(),e.getY()) >= 20) {
+        boolean colision = false;
+        if (rectangle != null) {
+            this.formContainer.removeFormFromMainContainer(rectangle);
+            for (AbstractForm fo : this.formContainer.getMainContainerList()) {
+                if (fo != rectangle && rectangle.collusion(fo)) {
+                    colision = true;
+                    break;
+                }  
+            }
+        }
+        if (rectangle != null && colision == false && rectangle.computeDistance(x1, y1, e.getX(),e.getY()) >= 20 ) {
             CreateCommand command = new CreateCommand(rectangle, formContainer);
             command.executeCommand();
         }
+        rectangle = null;
     }
 }

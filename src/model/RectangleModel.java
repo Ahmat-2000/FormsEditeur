@@ -11,13 +11,14 @@ public class RectangleModel extends AbstractForm  {
         this(x, y, width, height, Color.BLACK);
     }
     
-    public String toString(){
-        return "Rectangle : x = " + x + ", y = " + y + ", endPointX = "+ (x+width)+ ", endPointX = "+ (y+height);
+    @Override
+    public String getName(){
+        return "rectangle";
     }
-    // @Override
-    // public void drawForm(Graphics g) {
-    //     g.setColor(this.getColor());
-    //     g.drawRect(this.getX(),this.getY(),this.getWidth(),this.getHeight());
-    //     // g.fillRect(this.getX(),this.getY(),this.getWith(),this.getHeight());
-    // }
+    @Override
+    public void resize(int x,int y){
+        this.width  = Math.abs(this.x - x);
+        this.height = Math.abs(this.y - y);
+        this.fireChange();
+    }
 }

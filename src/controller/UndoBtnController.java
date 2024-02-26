@@ -8,10 +8,6 @@ import model.commandPattern.ICommand;
 
 
 public class UndoBtnController implements ActionListener{
-    public UndoBtnController() {
-
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!CommandHistory.getUndoList().empty()) {
