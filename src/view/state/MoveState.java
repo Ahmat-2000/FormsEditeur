@@ -42,6 +42,7 @@ public class MoveState extends MouseAdapter  {
         if (form != null) {
             for (AbstractForm fo : this.formContainer.getMainContainerList()) {
                 if (fo != form && form.collusion(fo)) {
+                    form.moveForm(startX,startY);
                     colision = true;
                     break;
                 }  
