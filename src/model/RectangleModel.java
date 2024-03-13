@@ -2,23 +2,61 @@ package model;
 
 import java.awt.Color;
 
-public class RectangleModel extends AbstractForm  {
+/**
+ * La classe RectangleModel étend AbstractForm pour représenter un modèle de rectangle.
+ * Elle hérite des fonctionnalités de manipulation de formes de base définies dans AbstractForm.
+ */
+public class RectangleModel extends AbstractForm {
     
+    /**
+     * Constructeur de RectangleModel pour créer un rectangle avec une couleur spécifiée.
+     * 
+     * @param x La position x du coin supérieur gauche du rectangle.
+     * @param y La position y du coin supérieur gauche du rectangle.
+     * @param width La largeur du rectangle.
+     * @param height La hauteur du rectangle.
+     * @param color La couleur du rectangle.
+     */
     public RectangleModel(int x, int y, int width, int height, Color color) {
-        super(x, y, width, height, color);
+        super(x, y, width, height, color); // Appelle le constructeur de la classe parente.
     }
+
+    /**
+     * Constructeur de RectangleModel pour créer un rectangle noir avec une position et des dimensions spécifiées.
+     * 
+     * @param x La position x du coin supérieur gauche du rectangle.
+     * @param y La position y du coin supérieur gauche du rectangle.
+     * @param width La largeur du rectangle.
+     * @param height La hauteur du rectangle.
+     */
     public RectangleModel(int x, int y, int width, int height) {
-        this(x, y, width, height, Color.BLACK);
+        this(x, y, width, height, Color.BLACK); // Appelle le constructeur surchargé avec une couleur noire.
     }
     
+    /**
+     * Retourne le nom de la forme, dans ce cas "rectangle".
+     * 
+     * @return Le nom de la forme.
+     */
     @Override
     public String getName(){
         return "rectangle";
     }
+
+    /**
+     * Redimensionne le rectangle en fonction des nouvelles coordonnées.
+     * Les nouvelles dimensions sont calculées à partir des coordonnées du coin supérieur gauche
+     * et du coin inférieur droit.
+     * 
+     * @param x La position x du coin inférieur droit du rectangle.
+     * @param y La position y du coin inférieur droit du rectangle.
+     */
     @Override
-    public void resize(int x,int y){
+    public void resize(int x, int y){
+        // La largeur est la différence entre la nouvelle position x et la position x actuelle.
         this.width  = Math.abs(this.x - x);
+        // La hauteur est la différence entre la nouvelle position y et la position y actuelle.
         this.height = Math.abs(this.y - y);
-        this.fireChange();
+        this.fireChange(); // Notifie les écouteurs du changement.
     }
 }

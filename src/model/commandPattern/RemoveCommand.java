@@ -3,32 +3,51 @@ package model.commandPattern;
 import model.AbstractForm;
 import model.FormContainer;
 
-public class RemoveCommand implements ICommand{
+/**
+ * Commande pour supprimer une forme du conteneur de formes.
+ * Permet d'exécuter, annuler et rétablir la suppression d'une forme.
+ */
+public class RemoveCommand implements ICommand {
 
-    public AbstractForm form;
-    private FormContainer formContainer;
+    private AbstractForm form; // La forme à supprimer.
+    private FormContainer formContainer; // Le conteneur de formes.
+
+    /**
+     * Constructeur de la commande de suppression.
+     * 
+     * @param form La forme à supprimer.
+     * @param formContainer Le conteneur où la forme sera supprimée.
+     */
     public RemoveCommand(AbstractForm form, FormContainer formContainer) {
         this.form = form;
         this.formContainer = formContainer;
     }
 
+    /**
+     * Exécute la suppression de la forme et met à jour l'historique des commandes.
+     */
     @Override
     public void executeCommand() {
-        this.formContainer.removeFormFromMainContainer(form);
+        formContainer.removeFormFromMainContainer(form);
         CommandHistory.getUndoList().push(this);
         CommandHistory.getRedoList().clear();
     }
 
+    /**
+     * Annule la suppression de la forme, la réajoute au conteneur, et met à jour l'historique.
+     */
     @Override
     public void undo() {
-        this.formContainer.addFormToMainContainer(form);
+        formContainer.addFormToMainContainer(form);
         CommandHistory.getRedoList().push(this);
     }
 
+    /**
+     * Rétablit la suppression de la forme après une annulation.
+     */
     @Override
     public void redo() {
-        this.formContainer.removeFormFromMainContainer(form);
+        formContainer.removeFormFromMainContainer(form);
         CommandHistory.getUndoList().push(this);
     }
-
 }

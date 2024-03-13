@@ -6,7 +6,7 @@ public interface ModelListener {
     /**
      * @param source
      * Cette méthode est appelée par les vues à chaque fois que le modèle
-     * change. La plupart de temps, on redessine la vue
+     * change La plupart de temps, on redessine la vue
      */
     public void somethingHasChanged(Object source);
 }

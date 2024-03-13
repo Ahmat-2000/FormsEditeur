@@ -7,53 +7,80 @@ import model.AbstractForm;
 import model.FormContainer;
 import model.commandPattern.ResizeCommand;
 
-public class ResizeState extends MouseAdapter  {
-    private FormContainer formContainer;
-    private int width,height;
-    private AbstractForm form;
+/**
+ * La classe ResizeState représente l'état de redimensionnement d'une forme dans l'application.
+ * Elle réagit aux événements de souris pour redimensionner une forme présente dans le conteneur des formes.
+ */
+public class ResizeState extends MouseAdapter {
+    private FormContainer formContainer; // Le conteneur des formes où se trouve la forme à redimensionner.
+    private int width, height; // Les dimensions initiales de la forme avant redimensionnement.
+    private AbstractForm form; // La forme en cours de redimensionnement.
+
+    /**
+     * Constructeur de ResizeState qui prend en paramètre le conteneur des formes.
+     * 
+     * @param formContainer Le conteneur des formes où se trouve la forme à redimensionner.
+     */
     public ResizeState(FormContainer formContainer) {
         this.formContainer = formContainer;
     }
+
+    /**
+     * Méthode appelée lorsque le bouton de la souris est pressé sur un composant.
+     * Récupère la forme sous la souris pour démarrer le redimensionnement.
+     * 
+     * @param e L'événement de souris associé.
+     */
     @Override
-    // Invoked when a mouse button has been pressed on a component.
     public void mousePressed(MouseEvent e) {
         form = null;
         for (AbstractForm f : this.formContainer.getMainContainerList()) {
-            if (f.onSurface(e.getX(),e.getY())) {
-                form = f;
-                this.width = f.getWidth(); 
+            if (f.onSurface(e.getX(), e.getY())) { // Vérifie si la souris est sur une forme.
+                form = f; // Stocke la forme sous la souris.
+                this.width = f.getWidth(); // Stocke les dimensions initiales de la forme.
                 this.height = f.getHeight();
                 break;
             }
         }
     }
+
+    /**
+     * Méthode appelée lorsque le bouton de la souris est pressé sur un composant et que la souris est ensuite déplacée.
+     * Redimensionne la forme en fonction de la position actuelle de la souris pour afficher le redimensionnement en cours.
+     * 
+     * @param e L'événement de souris associé.
+     */
     @Override
-    // Invoked when a mouse button is pressed on a component and then dragged.
     public void mouseDragged(MouseEvent e) {
-        if (form != null) {
-            form.resize(e.getX(), e.getY());
+        if (form != null) { // Si une forme est en cours de redimensionnement.
+            form.resize(e.getX(), e.getY()); // Redimensionne la forme en fonction de la position actuelle de la souris.
         }
     }
+
+    /**
+     * Méthode appelée lorsque le bouton de la souris est relâché sur un composant.
+     * Finalise le redimensionnement de la forme et exécute la commande de redimensionnement si les conditions sont remplies.
+     * 
+     * @param e L'événement de souris associé.
+     */
     @Override
-    // Invoked when a mouse button has been released on a component.
     public void mouseReleased(MouseEvent e) {
-        boolean colision = false;
+        boolean collision = false; // Indicateur de collision avec d'autres formes.
         if (form != null) {
             for (AbstractForm fo : this.formContainer.getMainContainerList()) {
-                if (fo != form && form.collusion(fo)) {
-                    form.setWidth(width);
+                if (fo != form && form.collusion(fo)) { // Vérifie la collision avec chaque autre forme.
+                    form.setWidth(width); // Reviens aux dimensions initiales de la forme.
                     form.setHeight(height);
-                    colision = true;
-                    break;
+                    collision = true;
+                    break; // Quitte la boucle dès qu'une collision est détectée.
                 }  
             }
         }
-        if (form != null && colision == false) {
-            // on annule le move avant de faire la commande
-            form.setWidth(width);
+        if (form != null && !collision) { // Si la forme n'a pas de collision avec d'autres formes.
+            form.setWidth(width); // Reviens aux dimensions initiales de la forme.
             form.setHeight(height);
-            ResizeCommand command = new ResizeCommand(form, e.getX(), e.getY());
-            command.executeCommand();
+            ResizeCommand command = new ResizeCommand(form, e.getX(), e.getY()); // Crée la commande de redimensionnement.
+            command.executeCommand(); // Exécute la commande pour redimensionner la forme à la nouvelle taille.
         }
     }
 }
