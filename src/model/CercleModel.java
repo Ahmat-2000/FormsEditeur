@@ -1,12 +1,10 @@
 package model;
 
-import java.awt.Color;
-
 public class CercleModel extends AbstractForm {
     public CercleModel(int x, int y, int diameter) {
-        this(x, y, diameter, Color.BLACK);
+        this(x, y, diameter, "black");
     }
-    public CercleModel(int x, int y, int diameter, Color color) {
+    public CercleModel(int x, int y, int diameter, String color) {
         super(x,y,diameter,diameter,color);
     }
     public CercleModel(int x1,int y1, int x2, int y2) {

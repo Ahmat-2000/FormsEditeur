@@ -13,9 +13,13 @@ public class RectangleView implements IView {
     
     @Override
     public void dessiner(Graphics g) {
-        g.setColor(Color.BLACK);
-        g.drawRect(rectangleModel.getX(),rectangleModel.getY(),rectangleModel.getWidth(),rectangleModel.getHeight());
-        // g.fillRect(rectangleModel.getX(),rectangleModel.getY(),rectangleModel.getWith(),rectangleModel.getHeight());
+        if (rectangleModel.getColor() == "black") {
+            g.setColor(Color.BLACK);
+            g.drawRect(rectangleModel.getX(),rectangleModel.getY(),rectangleModel.getWidth(),rectangleModel.getHeight());  
+        } else{
+            g.setColor(Color.RED);
+            g.fillRect(rectangleModel.getX(),rectangleModel.getY(),rectangleModel.getWidth(),rectangleModel.getHeight());
+        }
     }
     
 }

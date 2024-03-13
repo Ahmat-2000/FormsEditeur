@@ -15,7 +15,7 @@ public class Screen extends JFrame{
         setTitle("Projet annuel");
         setIconImage(new ImageIcon("images"+File.separator+"icon.png").getImage());
         setSize(800,800);
-        //setResizable(false);
+        setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());

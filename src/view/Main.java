@@ -1,21 +1,22 @@
 package view;
 
-import model.CercleModel;
 import model.FormContainer;
-import model.RectangleModel;
+import model.strategyPositionement.AbstractStrategy;
+import model.strategyPositionement.CercleStrategy;
+import model.strategyPositionement.RectStrategy;
 
 public class Main {
     public static void main(String[] args) {
         FormContainer formesContainer = new FormContainer();
-
-        formesContainer.addFormToMainContainer(new CercleModel(400, 400, 100));
-        formesContainer.addFormToMainContainer(new RectangleModel(200, 100, 80, 120));
-        formesContainer.addFormToMainContainer(new CercleModel(300, 100, 50));
         ViewFormContainer viewContainer = new ViewFormContainer(formesContainer);
         Header header = new Header(viewContainer,formesContainer);
         Screen window = new Screen(viewContainer, header);
         window.setVisible(true);
-        
+        // AbstractStrategy strategy = new RectStrategy(4, viewContainer.getWidth(), viewContainer.getHeight(), formesContainer);
+        // strategy.posForm();
+
+        AbstractStrategy s2 = new CercleStrategy(4, viewContainer.getWidth(), viewContainer.getHeight(), formesContainer);
+        s2.posForm();
     }
     
 }

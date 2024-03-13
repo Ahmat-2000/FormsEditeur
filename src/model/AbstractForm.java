@@ -1,14 +1,12 @@
 package model;
 
-import java.awt.Color;
-
 import model.observerPattern.AbstractListenableModel;
 
 public abstract class AbstractForm extends AbstractListenableModel implements IForm {
     protected int x , y , width, height;
-    protected Color color;
-    
-    public AbstractForm(int x, int y, int width, int height, Color color) {
+    protected String color;
+
+    public AbstractForm(int x, int y, int width, int height, String color) {
         super();
         this.x = x;
         this.y = y;
@@ -87,6 +85,10 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
         this.width = width;
         this.fireChange();
     }
+    public String getColor() {
+        return color;
+    }
    public abstract String getName();
    public abstract void resize(int x, int y);
+
 }
