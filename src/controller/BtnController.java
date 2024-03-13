@@ -3,40 +3,38 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+
 import view.ViewFormContainer;
 
 /**
- * Controller class that handles the interaction between the user and the view components.
- * It listens for actions performed on buttons and responds by updating the view state.
+ * Le contrôleur des boutons qui réagit aux événements de clic.
  */
 public class BtnController implements ActionListener {
-
-    private ViewFormContainer viewContainer; // The container that holds the view components.
-    private MouseAdapter viewState; // The current state of the view.
+    private ViewFormContainer viewContainer; // La vue principale de l'application.
+    private MouseAdapter viewState; // L'état d'interaction de la vue.
 
     /**
-     * Constructs a BtnController with specified view container and mouse adapter state.
-     *
-     * @param viewContainer The container that holds and manages the view components.
-     * @param viewState     The initial state of the view to be set on button action.
+     * Constructeur du contrôleur des boutons.
+     * 
+     * @param viewContainer La vue principale de l'application.
+     * @param viewState L'état d'interaction de la vue.
      */
     public BtnController(ViewFormContainer viewContainer, MouseAdapter viewState) {
-        this.viewContainer = viewContainer;
-        this.viewState = viewState;
+        this.viewContainer = viewContainer; // Initialise la vue principale de l'application.
+        this.viewState = viewState; // Initialise l'état d'interaction de la vue.
     }
 
-    /**
-     * Invoked when an action occurs on the bound button.
-     * This method changes the current state of the view container to the new state
-     * and updates the listeners accordingly.
-     *
-     * @param e The event to be processed.
-     */
     @Override
+    /**
+     * Méthode appelée lorsqu'un événement de clic est détecté sur un bouton.
+     * Elle change l'état d'interaction de la vue pour celui associé à ce contrôleur.
+     */
     public void actionPerformed(ActionEvent e) {
-        this.viewContainer.removeListeners(this.viewContainer.getState()); // Remove the current state listeners.
-        this.viewContainer.setState(viewState); // Update the view container with the new state.
-        this.viewContainer.addListeners(viewState); // Add the new state listeners.
+        // Supprime les écouteurs d'événements de l'état d'interaction actuel de la vue.
+        this.viewContainer.removeListeners(this.viewContainer.getState());
+        // Définit le nouvel état d'interaction de la vue avec celui associé à ce contrôleur.
+        this.viewContainer.setState(viewState);
+        // Ajoute les écouteurs d'événements du nouvel état d'interaction à la vue.
+        this.viewContainer.addListeners(viewState);
     }
-
 }
