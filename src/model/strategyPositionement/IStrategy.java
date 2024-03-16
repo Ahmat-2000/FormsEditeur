@@ -1,6 +1,7 @@
 package model.strategyPositionement;
 
-public interface IStrategy {
+import model.AbstractForm;
 
-    public void posForm();
+public interface IStrategy {
+    public AbstractForm creatForm(int x,int y);
 } 
