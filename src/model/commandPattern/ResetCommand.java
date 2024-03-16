@@ -16,7 +16,7 @@ public class ResetCommand implements ICommand{
     @Override
     public void executeCommand() {
         this.formList = this.oldFormContainer.copyOfList();
-        this.oldFormContainer.clearMainContainer();
+        this.oldFormContainer.clearContainer();
         CommandHistory.getUndoList().push(this);
         CommandHistory.getRedoList().clear();
     }
@@ -30,7 +30,7 @@ public class ResetCommand implements ICommand{
     @Override
     public void redo() {
         this.formList = this.oldFormContainer.copyOfList();
-        this.oldFormContainer.clearMainContainer();
+        this.oldFormContainer.clearContainer();
         CommandHistory.getUndoList().push(this);
     }
     

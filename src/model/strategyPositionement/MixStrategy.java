@@ -16,9 +16,9 @@ public class MixStrategy extends AbstractStrategy{
     public AbstractForm creatForm(int x,int y) {
         int rand =  this.random.nextInt(3);
         if (rand == 0) {
-            return new RectangleModel(x, y, formWidth,formHeight, color);            
+            return new RectangleModel(x, y, formWidth,formHeight);            
         }else{
-            return new CercleModel(x, y, formWidth, color);            
+            return new CercleModel(x, y, formWidth);            
         }
     }
     

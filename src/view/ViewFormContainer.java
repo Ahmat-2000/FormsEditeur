@@ -39,10 +39,6 @@ public class ViewFormContainer extends JPanel implements ModelListener{
         this.state = state;
     }
 
-    // public FormContainer getFormesContainer() {
-    //     return this.formesContainer;
-    // }
-
     @Override
     public void somethingHasChanged(Object source) {
         this.repaint();

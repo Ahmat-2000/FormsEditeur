@@ -11,6 +11,6 @@ public class RectStrategy extends AbstractStrategy{
     }
     @Override
     public AbstractForm creatForm(int x,int y) {
-        return new RectangleModel(x, y, formWidth,formHeight, color);
+        return new RectangleModel(x, y, formWidth,formHeight);
     }
 }

@@ -13,7 +13,7 @@ public class CercleStrategy extends AbstractStrategy{
 
     @Override
     public AbstractForm creatForm(int x,int y) {
-        return new CercleModel(x, y, formWidth, color);
+        return new CercleModel(x, y, formWidth);
     }
     
 }

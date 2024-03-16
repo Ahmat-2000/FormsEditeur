@@ -19,7 +19,7 @@ public class RemoveState extends MouseAdapter {
     public void mouseClicked(MouseEvent e) {
         AbstractForm tmp = null;
         for (AbstractForm f : this.formContainer.getMainContainerList()) {
-            if (f.onSurface(e.getX(),e.getY())) {
+            if (f.onSurface(e.getX(),e.getY()) && f.isEditable()) {
                 tmp = f;
                 break;
             }

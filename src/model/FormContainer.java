@@ -13,18 +13,23 @@ public class FormContainer extends AbstractListenableModel implements ModelListe
         this.mainContainerList = new ArrayList<AbstractForm>();
     }
 
-    public void addFormToMainContainer(AbstractForm f){
+    public void addForm(AbstractForm f){
         f.addModelListener(this);
         this.mainContainerList.add(f);
         this.fireChange();
     }
 
-    public void removeFormFromMainContainer(IForm f){
-        this.mainContainerList.remove(f);
-        this.fireChange();
+    public void removeForm(AbstractForm f){
+        if (f.isEditable()) {
+            this.mainContainerList.remove(f);
+            this.fireChange();
+        }
     }
-    public void clearMainContainer(){
-        this.mainContainerList.clear();
+    public void clearContainer(){
+        ArrayList<AbstractForm> tmp = this.copyOfList();
+        for (AbstractForm form : tmp) {
+            this.removeForm(form);
+        }
         this.fireChange();
     }
     public void setMainContainerList(ArrayList<AbstractForm> l) {

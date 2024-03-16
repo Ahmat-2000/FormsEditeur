@@ -22,7 +22,8 @@ public class DrawCercleState extends MouseAdapter{
         x1 = e.getX();
         y1 = e.getY();
         cercle = new CercleModel(x1,y1, 0);
-        this.formesContainer.addFormToMainContainer(cercle);
+        cercle.setEditable(true);
+        this.formesContainer.addForm(cercle);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class DrawCercleState extends MouseAdapter{
     public void mouseReleased(MouseEvent e) {
         boolean colision = false;
         if (cercle != null) {
-            this.formesContainer.removeFormFromMainContainer(cercle);
+            this.formesContainer.removeForm(cercle);
             for (AbstractForm fo : this.formesContainer.getMainContainerList()) {
                 if (fo != cercle && cercle.collusion(fo)) {
                     colision = true;

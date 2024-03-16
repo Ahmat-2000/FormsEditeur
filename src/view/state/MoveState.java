@@ -19,7 +19,7 @@ public class MoveState extends MouseAdapter  {
     public void mousePressed(MouseEvent e) {
         form = null;
         for (AbstractForm f : this.formContainer.getMainContainerList()) {
-            if (f.onSurface(e.getX(),e.getY())) {
+            if (f.onSurface(e.getX(),e.getY()) && f.isEditable()) {
                 form = f;
                 startX = form.getX(); 
                 startY = form.getY();

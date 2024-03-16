@@ -2,13 +2,9 @@ package model;
 
 public class RectangleModel extends AbstractForm  {
     
-    public RectangleModel(int x, int y, int width, int height, String color) {
-        super(x, y, width, height, color);
-    }
     public RectangleModel(int x, int y, int width, int height) {
-        this(x, y, width, height, "black");
+        super(x, y, width, height);
     }
-    
     @Override
     public String getName(){
         return "rectangle";

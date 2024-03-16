@@ -19,7 +19,7 @@ public class ResizeState extends MouseAdapter  {
     public void mousePressed(MouseEvent e) {
         form = null;
         for (AbstractForm f : this.formContainer.getMainContainerList()) {
-            if (f.onSurface(e.getX(),e.getY())) {
+            if (f.onSurface(e.getX(),e.getY()) && f.isEditable()) {
                 form = f;
                 this.width = f.getWidth(); 
                 this.height = f.getHeight();

@@ -21,7 +21,8 @@ public class DrawRectState extends MouseAdapter {
         x1 = e.getX();
         y1 = e.getY();
         rectangle = new RectangleModel(x1,y1, 0,0);
-        this.formContainer.addFormToMainContainer(rectangle);
+        rectangle.setEditable(true);
+        this.formContainer.addForm(rectangle);
     }
     @Override
     // Invoked when a mouse button is pressed on a component and then dragged.
@@ -37,7 +38,7 @@ public class DrawRectState extends MouseAdapter {
     public void mouseReleased(MouseEvent e) {
         boolean colision = false;
         if (rectangle != null) {
-            this.formContainer.removeFormFromMainContainer(rectangle);
+            this.formContainer.removeForm(rectangle);
             for (AbstractForm fo : this.formContainer.getMainContainerList()) {
                 if (fo != rectangle && rectangle.collusion(fo)) {
                     colision = true;

@@ -14,20 +14,20 @@ public class RemoveCommand implements ICommand{
 
     @Override
     public void executeCommand() {
-        this.formContainer.removeFormFromMainContainer(form);
+        this.formContainer.removeForm(form);
         CommandHistory.getUndoList().push(this);
         CommandHistory.getRedoList().clear();
     }
 
     @Override
     public void undo() {
-        this.formContainer.addFormToMainContainer(form);
+        this.formContainer.addForm(form);
         CommandHistory.getRedoList().push(this);
     }
 
     @Override
     public void redo() {
-        this.formContainer.removeFormFromMainContainer(form);
+        this.formContainer.removeForm(form);
         CommandHistory.getUndoList().push(this);
     }
 

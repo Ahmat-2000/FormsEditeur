@@ -4,15 +4,14 @@ import model.observerPattern.AbstractListenableModel;
 
 public abstract class AbstractForm extends AbstractListenableModel implements IForm {
     protected int x , y , width, height;
-    protected String color;
+    protected boolean editable = false;
 
-    public AbstractForm(int x, int y, int width, int height, String color) {
+    public AbstractForm(int x, int y, int width, int height) {
         super();
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.color = color;
     }
 
     @Override
@@ -85,10 +84,15 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
         this.width = width;
         this.fireChange();
     }
-    public String getColor() {
-        return color;
+    public void setEditable(boolean val){
+        this.editable = val;
     }
-   public abstract String getName();
-   public abstract void resize(int x, int y);
+    public boolean isEditable(){
+        return this.editable;
+    }
+    @Override
+    public abstract String getName();
+    @Override
+    public abstract void resize(int x, int y);
 
 }

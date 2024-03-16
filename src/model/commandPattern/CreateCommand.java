@@ -13,20 +13,20 @@ public class CreateCommand implements ICommand{
 
     @Override
     public void executeCommand() {
-        this.formContainer.addFormToMainContainer(form);
+        this.formContainer.addForm(form);
         CommandHistory.getUndoList().push(this);
         CommandHistory.getRedoList().clear();
     }
 
     @Override
     public void undo() {
-        this.formContainer.removeFormFromMainContainer(form);
+        this.formContainer.removeForm(form);
         CommandHistory.getRedoList().push(this);
     }
 
     @Override
     public void redo() {
-        this.formContainer.addFormToMainContainer(form);
+        this.formContainer.addForm(form);
         CommandHistory.getUndoList().push(this);
     }
 }

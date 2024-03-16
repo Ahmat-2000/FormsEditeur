@@ -12,7 +12,6 @@ public abstract class AbstractStrategy implements IStrategy{
     protected int width, height;
     protected final int formWidth = 160;
     protected final int formHeight = 150;
-    protected final String color = "red";
     protected final int maxAttempts = 1000; // Limite le nombre d'essais pour placer une forme
 
     public AbstractStrategy(int formNumber, int w, int h){
@@ -56,7 +55,7 @@ public abstract class AbstractStrategy implements IStrategy{
                     }
                 }
                 if (!collision) {
-                    formContainer.addFormToMainContainer(c);
+                    formContainer.addForm(c);
                     placed = true; // Marque la forme comme placée avec succès
                     i++; // Incrémente seulement si une forme est placée avec succès
                 } else {

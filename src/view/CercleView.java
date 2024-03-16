@@ -18,12 +18,12 @@ public class CercleView  implements IView{
     }
     @Override
     public void dessiner(Graphics g) {
-        g.setColor(Color.BLACK);
+        g.setColor(new Color(0, 0, 26));
         g.drawRect(cercleModel.getX(),cercleModel.getY(),cercleModel.getWidth(),cercleModel.getWidth());
-        if (cercleModel.getColor() == "black") {
+        if (cercleModel.isEditable()) {
             g.drawOval(cercleModel.getX(),cercleModel.getY(),cercleModel.getWidth(),cercleModel.getWidth());
         } else{
-            g.setColor(Color.RED);
+            g.setColor(new Color(140, 192, 132));
             g.fillOval(cercleModel.getX(),cercleModel.getY(),cercleModel.getWidth(),cercleModel.getWidth());  
         }
     }    

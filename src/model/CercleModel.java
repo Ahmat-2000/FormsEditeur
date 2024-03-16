@@ -2,10 +2,7 @@ package model;
 
 public class CercleModel extends AbstractForm {
     public CercleModel(int x, int y, int diameter) {
-        this(x, y, diameter, "black");
-    }
-    public CercleModel(int x, int y, int diameter, String color) {
-        super(x,y,diameter,diameter,color);
+        super(x,y,diameter,diameter);
     }
     public CercleModel(int x1,int y1, int x2, int y2) {
         this(x2, y1, 0);
