@@ -8,13 +8,13 @@ import model.AbstractForm;
  * et de rétablissement associées à cette action.
  */
 public class ResizeCommand implements ICommand {
-    // Le formulaire à redimensionner.
+    /** Le formulaire à redimensionner. */ 
     public AbstractForm form;
 
-    // Les dimensions originales du formulaire avant le redimensionnement.
+    /** Les dimensions originales du formulaire avant le redimensionnement.*/
     private int width, height;
 
-    // Les nouvelles dimensions souhaitées pour le redimensionnement.
+    /** Les nouvelles dimensions souhaitées pour le redimensionnement.*/
     private int x, y;
 
     /**

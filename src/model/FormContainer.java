@@ -5,88 +5,94 @@ import model.observerPattern.AbstractListenableModel;
 import model.observerPattern.ModelListener;
 
 /**
- * FormContainer sert de conteneur pour stocker et gérer un ensemble de formes géométriques.
- * Il étend AbstractListenableModel pour pouvoir notifier les écouteurs de tout changement dans le conteneur,
- * et implémente ModelListener pour réagir aux changements dans les formes individuelles qu'il contient.
+ * La classe {@code FormContainer} sert de conteneur pour stocker et gérer une collection de formes géométriques.<br/>
+ * Elle étend {@code AbstractListenableModel} afin de pouvoir notifier les écouteurs de tout changement survenant dans le conteneur.<br/>
+ * De plus, elle implémente {@code ModelListener} pour pouvoir réagir aux modifications des formes individuelles contenues.<br/>
  */
 public class FormContainer extends AbstractListenableModel implements ModelListener {
-    private ArrayList<AbstractForm> mainContainerList; // La liste principale des formes stockées.
+
+    /** Liste principale contenant les formes géométriques. */
+    private ArrayList<AbstractForm> mainContainerList;
 
     /**
-     * Constructeur de FormContainer. Initialise la liste des formes.
+     * Constructeur de {@code FormContainer}. Initialise la liste des formes.
      */
     public FormContainer() {
-        super(); // Appelle le constructeur de la superclasse pour initialiser les écouteurs.
+        super();
         this.mainContainerList = new ArrayList<>();
     }
 
     /**
-     * Ajoute une forme au conteneur principal et s'abonne aux notifications de changement pour cette forme.
+     * Ajoute une forme au conteneur et s'inscrit comme écouteur des modifications de cette forme.
+     * Notifie tous les écouteurs de {@code FormContainer} qu'une forme a été ajoutée.
      * 
      * @param f La forme à ajouter au conteneur.
      */
-    public void addFormToMainContainer(AbstractForm f) {
-        f.addModelListener(this); // S'abonne aux changements de la forme.
-        this.mainContainerList.add(f); // Ajoute la forme à la liste.
-        this.fireChange(); // Notifie les écouteurs du changement dans le conteneur.
+    public void addForm(AbstractForm f){
+        f.addModelListener(this);
+        this.mainContainerList.add(f);
+        this.fireChange();
     }
 
     /**
-     * Supprime une forme du conteneur principal.
+     * Supprime une forme du conteneur si elle est modifiable. Notifie tous les écouteurs de {@code FormContainer}
+     * qu'une forme a été supprimée.
      * 
-     * @param f La forme à supprimer.
+     * @param f La forme à supprimer du conteneur.
      */
-    public void removeFormFromMainContainer(IForm f) {
-        this.mainContainerList.remove(f); // Supprime la forme de la liste.
-        this.fireChange(); // Notifie les écouteurs du changement.
+    public void removeForm(AbstractForm f){
+        if (f.isEditable()) {
+            this.mainContainerList.remove(f);
+            this.fireChange();
+        }
     }
 
     /**
-     * Vide le conteneur principal de toutes ses formes.
+     * Vide le conteneur de toutes ses formes, en supprimant chaque forme individuellement.
      */
-    public void clearMainContainer() {
-        this.mainContainerList.clear(); // Vide la liste des formes.
-        this.fireChange(); // Notifie les écouteurs du changement.
+    public void clearContainer(){
+        ArrayList<AbstractForm> tmp = this.copyOfList();
+        for (AbstractForm form : tmp) {
+            this.removeForm(form);
+        }
     }
 
     /**
-     * Définit la liste des formes du conteneur principal.
+     * Définit la nouvelle liste des formes pour le conteneur principal et notifie les écouteurs du changement.
      * 
-     * @param l La nouvelle liste des formes.
+     * @param l La nouvelle liste des formes à définir pour le conteneur.
      */
     public void setMainContainerList(ArrayList<AbstractForm> l) {
-        this.mainContainerList = l; // Remplace la liste actuelle par la nouvelle liste.
-        this.fireChange(); // Notifie les écouteurs du changement.
+        this.mainContainerList = l; 
+        this.fireChange(); 
     }
 
     /**
-     * Crée et retourne une copie de la liste des formes du conteneur.
+     * Crée et retourne une copie de la liste actuelle des formes dans le conteneur.
      * 
-     * @return Une copie de la liste des formes.
+     * @return Une nouvelle {@code ArrayList} contenant toutes les formes du conteneur.
      */
     public ArrayList<AbstractForm> copyOfList() {
-        ArrayList<AbstractForm> f = new ArrayList<>();
-        this.mainContainerList.forEach(el -> f.add(el)); // Copie chaque élément dans une nouvelle liste.
-        return f;
+        return new ArrayList<>(this.mainContainerList);
     }
 
     /**
-     * Récupère la liste actuelle des formes dans le conteneur.
+     * Récupère la liste actuelle des formes contenues dans le conteneur.
      * 
-     * @return La liste des formes.
+     * @return La liste actuelle des formes géométriques contenues dans {@code FormContainer}.
      */
     public ArrayList<AbstractForm> getMainContainerList() {
         return this.mainContainerList;
     }
 
     /**
-     * Réagit aux changements dans n'importe quelle forme du conteneur en notifiant à son tour les écouteurs
-     * du conteneur de ces changements.
+     * Réagit aux changements signalés par une forme spécifique contenue dans le conteneur.
+     * Cette méthode permet de notifier les écouteurs de {@code FormContainer} que l'un de ses éléments a changé.
      * 
-     * @param source L'objet source du changement.
+     * @param source L'objet source du changement, typiquement une forme géométrique contenue dans le conteneur.
      */
     @Override
     public void somethingHasChanged(Object source) {
-        this.fireChange(); // Notifie les écouteurs du changement dans le conteneur.
+        this.fireChange(); 
     }
 }

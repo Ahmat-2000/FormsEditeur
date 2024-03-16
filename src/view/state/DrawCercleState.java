@@ -13,9 +13,12 @@ import model.commandPattern.CreateCommand;
  * Elle réagit aux événements de souris pour créer et dessiner un cercle.
  */
 public class DrawCercleState extends MouseAdapter {
-    private FormContainer formesContainer; // Le conteneur des formes où ajouter le cercle.
-    private int x1, x2, y1, y2; // Les coordonnées de la souris pour le début et la fin du dessin.
-    private CercleModel cercle; // Le cercle en cours de dessin.
+    /** Le conteneur des formes où ajouter le cercle. */
+    private FormContainer formesContainer; 
+    /** Les coordonnées de la souris pour le début et la fin du dessin.*/
+    private int x1, x2, y1, y2;
+    /** Le cercle en cours de dessin. */
+    private CercleModel cercle; 
 
     /**
      * Constructeur de DrawCercleState qui prend en paramètre le conteneur des formes.
@@ -36,8 +39,9 @@ public class DrawCercleState extends MouseAdapter {
     public void mousePressed(MouseEvent e) {
         x1 = e.getX();
         y1 = e.getY();
-        cercle = new CercleModel(x1, y1, 0); // Crée un nouveau cercle avec un rayon initial de 0.
-        this.formesContainer.addFormToMainContainer(cercle); // Ajoute le cercle au conteneur des formes.
+        cercle = new CercleModel(x1,y1, 0);
+        cercle.setEditable(true);
+        this.formesContainer.addForm(cercle);
     }
 
     /**
@@ -50,8 +54,8 @@ public class DrawCercleState extends MouseAdapter {
     public void mouseDragged(MouseEvent e) {
         x2 = e.getX();
         y2 = e.getY();
-        int diameter = cercle.computeDistance(x1, y1, x2, y2); // Calcule le diamètre du cercle.
-        cercle.setWidth(diameter); // Redimensionne le cercle en fonction du diamètre calculé.
+        int diameter = cercle.computeDistance(x1, y1, x2, y2); 
+        cercle.setWidth(diameter); 
     }
 
     /**
@@ -66,11 +70,9 @@ public class DrawCercleState extends MouseAdapter {
         
         // Vérifie si le cercle est valide et s'il n'y a pas de collision avec d'autres formes.
         if (cercle != null) {
-            this.formesContainer.removeFormFromMainContainer(cercle); // Supprime temporairement le cercle du conteneur.
-
-            // Vérifie s'il y a une collision entre le cercle et d'autres formes.
+            this.formesContainer.removeForm(cercle);
             for (AbstractForm fo : this.formesContainer.getMainContainerList()) {
-                if (fo != cercle && cercle.collusion(fo)) { // Vérifie la collision avec chaque forme différente du cercle.
+                if (fo != cercle && cercle.collision(fo)) {
                     colision = true;
                     break; // Quitte la boucle dès qu'une collision est détectée.
                 }  
@@ -79,8 +81,8 @@ public class DrawCercleState extends MouseAdapter {
 
         // Vérifie les conditions pour ajouter le cercle au conteneur des formes.
         if (cercle != null && !colision && cercle.computeDistance(x1, y1, e.getX(), e.getY()) >= 20) {
-            CreateCommand command = new CreateCommand(cercle, formesContainer); // Crée une commande pour ajouter le cercle.
-            command.executeCommand(); // Exécute la commande pour ajouter le cercle au conteneur.
+            CreateCommand command = new CreateCommand(cercle, formesContainer); 
+            command.executeCommand(); 
         }
     }
 }

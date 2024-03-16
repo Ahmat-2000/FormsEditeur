@@ -5,67 +5,68 @@ import model.AbstractForm;
 import model.FormContainer;
 
 /**
- * La classe ResetCommand implémente l'interface ICommand pour supporter la fonctionnalité de réinitialisation
- * dans un contexte de gestion de formulaires. Elle fournit des mécanismes pour réinitialiser l'état d'un conteneur de formulaires
- * à son état initial et supporte les opérations d'annulation et de rétablissement dans le cadre du patron de conception de commande.
+ * La classe <b>ResetCommand</b> implémente l'interface <b>ICommand</b> pour gérer la réinitialisation d'un conteneur
+ * de formes <b>FormContainer</b> dans une application de gestion de formes.<br/> Elle permet de réinitialiser le conteneur de formes
+ * à son état vide initial et de supporter les opérations d'annulation et de rétablissement, conformément au modèle de conception Commande.
+ * 
+ * <p>Cette commande est utile dans les contextes où une remise à zéro ou une réinitialisation complète du conteneur de formes est nécessaire,
+ * tout en offrant la flexibilité de revenir aux états précédents grâce aux fonctionnalités d'annulation et de rétablissement.</p>
  */
 public class ResetCommand implements ICommand {
 
-    // Conserve une capture instantanée de la liste des formulaires avant l'opération de réinitialisation.
+    /**
+     * Capture instantanée de l'état du conteneur de formes avant l'exécution de la commande de réinitialisation.
+     * Cette liste est utilisée pour restaurer l'état du conteneur lors de l'opération d'annulation.
+     */
     private ArrayList<AbstractForm> formList;
 
-    // Référence au conteneur de formulaires original qui sera réinitialisé.
+    /**
+     * Référence au conteneur de formes qui doit être réinitialisé. Cette référence est utilisée pour accéder
+     * au conteneur et effectuer l'opération de réinitialisation, ainsi que pour les opérations d'annulation et de rétablissement.
+     */
     private FormContainer oldFormContainer;
 
     /**
-     * Construit une nouvelle instance de ResetCommand avec une référence au conteneur de formulaires
-     * qui doit être réinitialisé. Ce conteneur est sauvegardé pour permettre les opérations d'annulation et de rétablissement.
-     *
-     * @param oldFormContainer Le conteneur de formulaires à réinitialiser.
+     * Construit une nouvelle commande de réinitialisation en associant la commande à un conteneur de formes spécifique.
+     * Le conteneur de formes passé en paramètre est celui qui sera réinitialisé par cette commande.
+     * 
+     * @param oldFormContainer Le conteneur de formes qui doit être réinitialisé par cette commande.
      */
     public ResetCommand(FormContainer oldFormContainer) {
         this.oldFormContainer = oldFormContainer;
     }
 
     /**
-     * Exécute la commande de réinitialisation. Elle sauvegarde l'état actuel du conteneur de formulaires,
-     * efface le conteneur principal, et enregistre cette commande pour une fonctionnalité d'annulation.
+     * Exécute l'opération de réinitialisation du conteneur de formes. Cette méthode sauvegarde l'état actuel du conteneur,
+     * réinitialise le conteneur à un état vide, et enregistre la commande dans l'historique des commandes pour permettre l'annulation.
      */
     @Override
     public void executeCommand() {
-        // Crée une copie de la liste actuelle des formulaires pour l'opération d'annulation.
         this.formList = this.oldFormContainer.copyOfList();
-        
-        // Efface le conteneur principal, réinitialisant efficacement son état.
-        this.oldFormContainer.clearMainContainer();
-        
-        // Enregistre cette commande dans la liste des annulations et efface l'historique des rétablissements pour maintenir l'intégrité du patron de conception de commande.
+        this.oldFormContainer.clearContainer();
         CommandHistory.getUndoList().push(this);
         CommandHistory.getRedoList().clear();
     }
 
     /**
-     * Rétablit le conteneur de formulaires à son état précédent avant que la commande de réinitialisation ait été exécutée.
-     * Cela fait partie de la fonctionnalité d'annulation dans le cadre du patron de conception de commande.
+     * Annule l'opération de réinitialisation et restaure le conteneur de formes à son état précédent.
+     * Cette méthode est utilisée pour annuler l'effet de la commande de réinitialisation et revenir à l'état du conteneur
+     * tel qu'il était avant l'exécution de la commande.
      */
     @Override
     public void undo() {
-        // Restaure l'état du conteneur de formulaires à partir de la liste de formulaires sauvegardée.
         this.oldFormContainer.setMainContainerList(this.formList);
-        
-        // Enregistre cette opération dans la liste de rétablissement pour des actions de rétablissement potentielles.
         CommandHistory.getRedoList().push(this);
     }
 
     /**
-     * Ré-exécute la commande de réinitialisation après une annulation. Cela réinstaure l'état réinitialisé du conteneur de formulaires.
-     * Cela fait partie de la fonctionnalité de rétablissement dans le cadre du patron de conception de commande.
+     * Rétablit l'opération de réinitialisation après une annulation. Cette méthode réexécute l'opération de réinitialisation
+     * et efface à nouveau le conteneur de formes, permettant ainsi de revenir à l'état réinitialisé du conteneur après une annulation.
      */
     @Override
     public void redo() {
-        // Effectue les mêmes opérations que dans executeCommand pour rétablir la réinitialisation.
         this.formList = this.oldFormContainer.copyOfList();
-        this.oldFormContainer.clearMainContainer();
+        this.oldFormContainer.clearContainer();
         CommandHistory.getUndoList().push(this);
     }
     

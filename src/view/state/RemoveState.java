@@ -12,7 +12,8 @@ import model.commandPattern.RemoveCommand;
  * Elle réagit à l'événement de clic de souris pour supprimer une forme du conteneur des formes.
  */
 public class RemoveState extends MouseAdapter {
-    private FormContainer formContainer; // Le conteneur des formes où se trouve la forme à supprimer.
+    /** Le conteneur des formes où se trouve la forme à supprimer. */
+    private FormContainer formContainer; 
 
     /**
      * Constructeur de RemoveState qui prend en paramètre le conteneur des formes.
@@ -31,16 +32,16 @@ public class RemoveState extends MouseAdapter {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        AbstractForm tmp = null; // Variable temporaire pour stocker la forme à supprimer.
+        AbstractForm tmp = null; 
         for (AbstractForm f : this.formContainer.getMainContainerList()) {
-            if (f.onSurface(e.getX(), e.getY())) { // Vérifie si la souris est sur une forme.
-                tmp = f; // Stocke la forme sous la souris.
-                break; // Quitte la boucle dès qu'une forme est trouvée.
+            if (f.onSurface(e.getX(),e.getY()) && f.isEditable()) {
+                tmp = f;
+                break;
             }
         }
-        if (tmp != null) { // Si une forme est trouvée sous la souris.
-            RemoveCommand command = new RemoveCommand(tmp, this.formContainer); // Crée la commande pour supprimer la forme.
-            command.executeCommand(); // Exécute la commande pour supprimer la forme du conteneur.
+        if (tmp != null) { 
+            RemoveCommand command = new RemoveCommand(tmp, this.formContainer);
+            command.executeCommand(); 
         }
     }
 }

@@ -13,9 +13,12 @@ import model.commandPattern.CreateCommand;
  * Elle réagit aux événements de souris pour créer et dessiner un rectangle.
  */
 public class DrawRectState extends MouseAdapter {
-    private FormContainer formContainer; // Le conteneur des formes où ajouter le rectangle.
-    private int x1, x2, y1, y2; // Les coordonnées de la souris pour le début et la fin du dessin.
-    private RectangleModel rectangle; // Le rectangle en cours de dessin.
+    /** Le conteneur des formes où ajouter le cercle. */
+    private FormContainer formContainer; 
+    /** Les coordonnées de la souris pour le début et la fin du dessin.*/
+    private int x1, x2, y1, y2;
+    /**  Le rectangle en cours de dessin.*/
+    private RectangleModel rectangle; 
 
     /**
      * Constructeur de DrawRectState qui prend en paramètre le conteneur des formes.
@@ -36,8 +39,9 @@ public class DrawRectState extends MouseAdapter {
     public void mousePressed(MouseEvent e) {
         x1 = e.getX();
         y1 = e.getY();
-        rectangle = new RectangleModel(x1, y1, 0, 0); // Crée un nouveau rectangle avec une largeur et une hauteur initialisées à 0.
-        this.formContainer.addFormToMainContainer(rectangle); // Ajoute le rectangle au conteneur des formes.
+        rectangle = new RectangleModel(x1,y1, 0,0);
+        rectangle.setEditable(true);
+        this.formContainer.addForm(rectangle);
     }
 
     /**
@@ -50,10 +54,10 @@ public class DrawRectState extends MouseAdapter {
     public void mouseDragged(MouseEvent e) {
         x2 = e.getX();
         y2 = e.getY();
-        int width = Math.abs(x1 - x2); // Calcule la largeur du rectangle.
-        int height = Math.abs(y1 - y2); // Calcule la hauteur du rectangle.
-        rectangle.setWidth(width); // Redimensionne le rectangle en fonction de la largeur calculée.
-        rectangle.setHeight(height); // Redimensionne le rectangle en fonction de la hauteur calculée.
+        int width = Math.abs(x1 - x2); 
+        int height = Math.abs(y1 - y2); 
+        rectangle.setWidth(width); 
+        rectangle.setHeight(height); 
     }
 
     /**
@@ -64,26 +68,22 @@ public class DrawRectState extends MouseAdapter {
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-        boolean colision = false; // Indicateur de collision avec d'autres formes.
-        
+        boolean colision = false; 
         // Vérifie si le rectangle est valide et s'il n'y a pas de collision avec d'autres formes.
         if (rectangle != null) {
-            this.formContainer.removeFormFromMainContainer(rectangle); // Supprime temporairement le rectangle du conteneur.
-
-            // Vérifie s'il y a une collision entre le rectangle et d'autres formes.
+            this.formContainer.removeForm(rectangle);
             for (AbstractForm fo : this.formContainer.getMainContainerList()) {
-                if (fo != rectangle && rectangle.collusion(fo)) { // Vérifie la collision avec chaque forme différente du rectangle.
+                if (fo != rectangle && rectangle.collision(fo)) {
                     colision = true;
-                    break; // Quitte la boucle dès qu'une collision est détectée.
+                    break; 
                 }  
             }
         }
-
         // Vérifie les conditions pour ajouter le rectangle au conteneur des formes.
         if (rectangle != null && !colision && rectangle.computeDistance(x1, y1, e.getX(), e.getY()) >= 20) {
-            CreateCommand command = new CreateCommand(rectangle, formContainer); // Crée une commande pour ajouter le rectangle.
-            command.executeCommand(); // Exécute la commande pour ajouter le rectangle au conteneur.
+            CreateCommand command = new CreateCommand(rectangle, formContainer); 
+            command.executeCommand(); 
         }
-        rectangle = null; // Réinitialise le rectangle après avoir finalisé le dessin.
+        rectangle = null; 
     }
 }

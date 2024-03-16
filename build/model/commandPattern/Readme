@@ -1,0 +1,19 @@
+
+# Linear undo
+
+Linear undo is implemented with a stack (last in first out (LIFO) data structure) that stores a history 
+of all executed commands. When a new command is executed it is added to the top of stack. Therefore, only 
+the last executed command can be undone and removed from the history. Undo can be repeated as long as the 
+history is not empty.
+
+# Restricted linear model
+
+The restricted linear model is an augmentation of the linear undo model. It satisfies the above described 
+stable execution property for linear undo, because this model does not keep the property if a command is done 
+while the history list includes other commands. The restricted linear model clears the history list before a new 
+command is added. But other restrictions are available, too. For example, the size of the history list can be 
+restricted or when a defined size is reached, the first executed command is deleted from the list.
+
+
+# Source 
+    https://en.wikipedia.org/wiki/Undo

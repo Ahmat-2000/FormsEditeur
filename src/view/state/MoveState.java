@@ -12,9 +12,12 @@ import model.commandPattern.MoveCommand;
  * Elle réagit aux événements de souris pour déplacer une forme présente dans le conteneur des formes.
  */
 public class MoveState extends MouseAdapter {
-    private FormContainer formContainer; // Le conteneur des formes où se trouve la forme à déplacer.
-    private int startX, startY, endX, endY; // Les coordonnées de départ et d'arrivée du déplacement.
-    private AbstractForm form; // La forme en cours de déplacement.
+    /** Le conteneur des formes où ajouter le cercle. */
+    private FormContainer formContainer; 
+    /** Les coordonnées de la souris pour le début et la fin du dessin.*/
+    private int startX, startY, endX, endY;
+    /** La forme en cours de déplacement. */
+    private AbstractForm form; 
 
     /**
      * Constructeur de MoveState qui prend en paramètre le conteneur des formes.
@@ -35,9 +38,9 @@ public class MoveState extends MouseAdapter {
     public void mousePressed(MouseEvent e) {
         form = null;
         for (AbstractForm f : this.formContainer.getMainContainerList()) {
-            if (f.onSurface(e.getX(), e.getY())) { // Vérifie si la souris est sur une forme.
-                form = f; // Stocke la forme sous la souris.
-                startX = form.getX(); // Stocke la position de départ du déplacement.
+            if (f.onSurface(e.getX(),e.getY()) && f.isEditable()) {
+                form = f;
+                startX = form.getX(); 
                 startY = form.getY();
                 break;
             }
@@ -52,10 +55,10 @@ public class MoveState extends MouseAdapter {
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        endX = e.getX(); // Met à jour la position actuelle de la souris.
+        endX = e.getX(); 
         endY = e.getY();
-        if (form != null) { // Si une forme est en cours de déplacement.
-            form.moveForm(endX, endY); // Déplace la forme à la nouvelle position de la souris.
+        if (form != null) { 
+            form.moveForm(endX, endY); 
         }
     }
 
@@ -67,20 +70,20 @@ public class MoveState extends MouseAdapter {
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-        boolean collision = false; // Indicateur de collision avec d'autres formes.
+        boolean collision = false;
         if (form != null) {
             for (AbstractForm fo : this.formContainer.getMainContainerList()) {
-                if (fo != form && form.collusion(fo)) { // Vérifie la collision avec chaque autre forme.
-                    form.moveForm(startX, startY); // Reviens à la position de départ du déplacement.
+                if (fo != form && form.collision(fo)) { 
+                    form.moveForm(startX, startY); 
                     collision = true;
-                    break; // Quitte la boucle dès qu'une collision est détectée.
+                    break; 
                 }  
             }
         }
-        if (form != null && !collision) { // Si la forme n'a pas de collision avec d'autres formes.
-            form.moveForm(startX, startY); // Reviens à la position de départ du déplacement.
-            MoveCommand command = new MoveCommand(form, endX, endY); // Crée la commande de déplacement.
-            command.executeCommand(); // Exécute la commande pour déplacer la forme à la nouvelle position.
+        if (form != null && !collision) {
+            form.moveForm(startX, startY); 
+            MoveCommand command = new MoveCommand(form, endX, endY); 
+            command.executeCommand();
         }
     }
 }

@@ -34,10 +34,10 @@ public class ResizeState extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
         form = null;
-        for (AbstractForm f : this.formContainer.getMainContainerList()) {
-            if (f.onSurface(e.getX(), e.getY())) { // Vérifie si la souris est sur une forme.
-                form = f; // Stocke la forme sous la souris.
-                this.width = f.getWidth(); // Stocke les dimensions initiales de la forme.
+        for (AbstractForm f : this.formContainer.getMainContainerList()) {            
+            if (f.onSurface(e.getX(),e.getY()) && f.isEditable()) {
+                form = f;
+                this.width = f.getWidth(); 
                 this.height = f.getHeight();
                 break;
             }
@@ -68,7 +68,7 @@ public class ResizeState extends MouseAdapter {
         boolean collision = false; // Indicateur de collision avec d'autres formes.
         if (form != null) {
             for (AbstractForm fo : this.formContainer.getMainContainerList()) {
-                if (fo != form && form.collusion(fo)) { // Vérifie la collision avec chaque autre forme.
+                if (fo != form && form.collision(fo)) { // Vérifie la collision avec chaque autre forme.
                     form.setWidth(width); // Reviens aux dimensions initiales de la forme.
                     form.setHeight(height);
                     collision = true;

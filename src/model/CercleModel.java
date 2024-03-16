@@ -1,6 +1,5 @@
 package model;
 
-import java.awt.Color;
 
 /**
  * CercleModel est une classe qui étend AbstractForm pour représenter spécifiquement un cercle.
@@ -10,26 +9,14 @@ import java.awt.Color;
 public class CercleModel extends AbstractForm {
 
     /**
-     * Constructeur de CercleModel qui définit un cercle avec un diamètre spécifié et une couleur par défaut.
+     * Constructeur de CercleModel qui définit un cercle avec un diamètre et une couleur spécifiés.
      * 
      * @param x La position x du centre du cercle.
      * @param y La position y du centre du cercle.
      * @param diameter Le diamètre du cercle.
      */
     public CercleModel(int x, int y, int diameter) {
-        this(x, y, diameter, Color.BLACK);
-    }
-
-    /**
-     * Constructeur de CercleModel qui définit un cercle avec un diamètre et une couleur spécifiés.
-     * 
-     * @param x La position x du centre du cercle.
-     * @param y La position y du centre du cercle.
-     * @param diameter Le diamètre du cercle.
-     * @param color La couleur du cercle.
-     */
-    public CercleModel(int x, int y, int diameter, Color color) {
-        super(x, y, diameter, diameter, color);
+        super(x, y, diameter, diameter);
     }
 
     /**
@@ -55,7 +42,7 @@ public class CercleModel extends AbstractForm {
     @Override
     public void setWidth(int width) {
         this.width = width;
-        this.height = width; // Pour un cercle, la largeur et la hauteur sont toujours égales.
+        this.height = width; 
         this.fireChange();
     }
 
@@ -78,8 +65,8 @@ public class CercleModel extends AbstractForm {
      */
     @Override
     public void resize(int x, int y) {
-        this.width = Math.abs(this.x - x); // La largeur est la distance absolue en x.
-        this.height = this.width; // La hauteur est mise à jour pour maintenir la forme du cercle.
-        this.fireChange(); // Notifie les écouteurs du changement.
+        this.width = Math.abs(this.x - x); 
+        this.height = this.width;
+        this.fireChange();
     }
 }

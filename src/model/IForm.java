@@ -56,5 +56,5 @@ public interface IForm {
      * @param f L'autre forme avec laquelle vérifier la collision.
      * @return true si une collision est détectée, sinon false.
      */
-    public boolean collusion(AbstractForm f);
+    public boolean collision(AbstractForm f);
 }

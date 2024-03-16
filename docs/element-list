@@ -1,0 +1,8 @@
+controller
+model
+model.commandPattern
+model.observerPattern
+model.strategyPositionement
+view
+view.factory
+view.state

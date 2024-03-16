@@ -6,27 +6,32 @@ import java.awt.event.MouseAdapter;
 import javax.swing.JPanel;
 
 import model.AbstractForm;
-import model.CercleModel;
 import model.FormContainer;
-import model.RectangleModel;
 import model.observerPattern.ModelListener;
+import view.factory.AbstractViewFactory;
 
 /**
  * La classe ViewFormContainer représente le conteneur de la vue principale de l'application.
  */
 public class ViewFormContainer extends JPanel implements ModelListener {
-    private MouseAdapter state = null; // Le gestionnaire d'état actuel pour interagir avec les formes.
-    private FormContainer formesContainer; // Le conteneur de formes.
+    /** Le gestionnaire d'état actuel pour interagir avec les formes.*/
+    private MouseAdapter state = null; 
+    /**  Le conteneur de formes.*/
+    private FormContainer formesContainer; 
+    /** L'usine de fabrication de vues. */
+    private AbstractViewFactory viewFactory;
 
     /**
      * Constructeur de la classe ViewFormContainer.
      * 
      * @param formesContainer Le conteneur de formes à afficher.
+     * @param viewFactory L'usine de fabrication de vues.
      */
-    public ViewFormContainer(FormContainer formesContainer) {
-        this.formesContainer = formesContainer; // Initialise le conteneur de formes.
-        this.formesContainer.addModelListener(this); // Ajoute cette instance comme écouteur du conteneur de formes.
-        this.setLayout(null); // Définit un layout null pour ce panneau.
+    public ViewFormContainer(FormContainer formesContainer, AbstractViewFactory viewFactory) {
+        this.formesContainer = formesContainer; 
+        this.viewFactory = viewFactory;
+        this.formesContainer.addModelListener(this); 
+        this.setLayout(null);
     }
 
     /**
@@ -87,15 +92,12 @@ public class ViewFormContainer extends JPanel implements ModelListener {
      * @param g Le contexte graphique sur lequel dessiner.
      */
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g); // Appelle la méthode paintComponent de la classe parente.
-        for (AbstractForm forme : formesContainer.getMainContainerList()) { // Pour chaque forme dans le conteneur de formes.
-            IView c = null; // Initialise la vue de la forme.
-            if (forme instanceof CercleModel) { // Si la forme est un cercle.
-                c = new CercleView((CercleModel) forme); // Initialise la vue du cercle.
-            } else { // Sinon, si la forme est un rectangle.
-                c = new RectangleView((RectangleModel) forme); // Initialise la vue du rectangle.
+        super.paintComponent(g); 
+        for (AbstractForm forme : formesContainer.getMainContainerList()) {
+            IView c = viewFactory.getInstance(forme); 
+            if (c != null) {
+                c.dessiner(g);
             }
-            c.dessiner(g); // Dessine la forme sur le contexte graphique.
         }
     }
 }
