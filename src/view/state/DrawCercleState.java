@@ -16,9 +16,11 @@ public class DrawCercleState extends MouseAdapter {
     /** Le conteneur des formes où ajouter le cercle. */
     private FormContainer formesContainer; 
     /** Les coordonnées de la souris pour le début et la fin du dessin.*/
-    private int x1, x2, y1, y2;
+    private int x1, y1;
     /** Le cercle en cours de dessin. */
     private CercleModel cercle; 
+    /** Permet de savoir si la souris est glissée */
+    private boolean dragged = false;
 
     /**
      * Constructeur de DrawCercleState qui prend en paramètre le conteneur des formes.
@@ -52,10 +54,9 @@ public class DrawCercleState extends MouseAdapter {
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        x2 = e.getX();
-        y2 = e.getY();
-        int diameter = cercle.computeDistance(x1, y1, x2, y2); 
+        int diameter = cercle.computeDistance(x1, y1, e.getX(), e.getY()); 
         cercle.setWidth(diameter); 
+        dragged = true;
     }
 
     /**
@@ -77,12 +78,12 @@ public class DrawCercleState extends MouseAdapter {
                     break; // Quitte la boucle dès qu'une collision est détectée.
                 }  
             }
+            // Vérifie les conditions pour ajouter le cercle au conteneur des formes.
+            if (dragged && !colision && cercle.computeDistance(x1, y1, e.getX(), e.getY()) >= 20) {
+                CreateCommand command = new CreateCommand(cercle, formesContainer); 
+                command.executeCommand(); 
+            }
         }
-
-        // Vérifie les conditions pour ajouter le cercle au conteneur des formes.
-        if (cercle != null && !colision && cercle.computeDistance(x1, y1, e.getX(), e.getY()) >= 20) {
-            CreateCommand command = new CreateCommand(cercle, formesContainer); 
-            command.executeCommand(); 
-        }
+        dragged = false;
     }
 }

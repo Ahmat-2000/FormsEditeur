@@ -14,11 +14,12 @@ import model.commandPattern.MoveCommand;
 public class MoveState extends MouseAdapter {
     /** Le conteneur des formes où ajouter le cercle. */
     private FormContainer formContainer; 
-    /** Les coordonnées de la souris pour le début et la fin du dessin.*/
-    private int startX, startY, endX, endY;
+    /** Les coordonnées de la souris lors d'un click.*/
+    private int startX, startY;
     /** La forme en cours de déplacement. */
     private AbstractForm form; 
-
+    /** Permet de savoir si la souris est glissée */
+    private boolean dragged = false;
     /**
      * Constructeur de MoveState qui prend en paramètre le conteneur des formes.
      * 
@@ -55,10 +56,9 @@ public class MoveState extends MouseAdapter {
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        endX = e.getX(); 
-        endY = e.getY();
         if (form != null) { 
-            form.moveForm(endX, endY); 
+            form.moveForm(e.getX(), e.getY()); 
+            dragged = true;
         }
     }
 
@@ -71,7 +71,7 @@ public class MoveState extends MouseAdapter {
     @Override
     public void mouseReleased(MouseEvent e) {
         boolean collision = false;
-        if (form != null) {
+        if (dragged == true && form != null) {
             for (AbstractForm fo : this.formContainer.getMainContainerList()) {
                 if (fo != form && form.collision(fo)) { 
                     form.moveForm(startX, startY); 
@@ -79,11 +79,12 @@ public class MoveState extends MouseAdapter {
                     break; 
                 }  
             }
+            if ( !collision) {
+                form.moveForm(startX, startY); 
+                MoveCommand command = new MoveCommand(form, e.getX(), e.getY()); 
+                command.executeCommand();
+            }
         }
-        if (form != null && !collision) {
-            form.moveForm(startX, startY); 
-            MoveCommand command = new MoveCommand(form, endX, endY); 
-            command.executeCommand();
-        }
+        dragged = false;
     }
 }
