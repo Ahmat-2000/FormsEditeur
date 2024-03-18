@@ -60,15 +60,17 @@ public class MoveState extends MouseAdapter {
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        int dx = e.getX() - predX;
-        int dy = e.getY() - predY;
-        int width = dx + form.getX() + form.getWidth();
-        int height = dy + form.getY() + form.getHeight();
-        if(form != null &&  dx + form.getX() > 2 && width < e.getComponent().getWidth()-2 && dy + form.getY() > 2 && height < e.getComponent().getHeight() -2) {
-            form.moveForm(dx,dy); 
-            predX = e.getX();
-            predY = e.getY();
-            dragged = true;
+        if(form != null ){
+            int dx = e.getX() - predX;
+            int dy = e.getY() - predY;
+            int width = dx + form.getX() + form.getWidth();
+            int height = dy + form.getY() + form.getHeight();
+            if( dx + form.getX() > 2 && width < e.getComponent().getWidth()-2 && dy + form.getY() > 2 && height < e.getComponent().getHeight() -2) {
+                form.moveForm(dx,dy); 
+                predX = e.getX();
+                predY = e.getY();
+                dragged = true;
+            }
         }
     }
 

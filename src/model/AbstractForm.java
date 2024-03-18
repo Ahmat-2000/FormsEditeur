@@ -24,6 +24,9 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
     /** Indicateur permettant de savoir si la forme est modifiable. */
     protected boolean editable = false;
 
+    /** Indicateur permettant de savoir si la forme est en création */
+    protected boolean dashed = false;
+
     /**
      * Constructeur d'{@code AbstractForm}.
      * 
@@ -185,7 +188,7 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
     /**
      * Modifie la valeur de x.
      * 
-     * @param x La valeur du décalage en x.
+     * @param x La valeur de x.
      */
     @Override
     public void setX(int x){
@@ -196,10 +199,17 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
     /**
      * Modifie la valeur de y.
      * 
-     * @param y La valeur du décalage en y.
+     * @param y La valeur de y.
      */
     public void setY(int y){
         this.y = y;
+        this.fireChange();
+    }
+    public boolean isDashed() {
+        return dashed;
+    }
+    public void setDashed(boolean dashed) {
+        this.dashed = dashed;
         this.fireChange();
     }
 }

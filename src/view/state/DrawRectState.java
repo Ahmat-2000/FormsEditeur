@@ -44,6 +44,7 @@ public class DrawRectState extends MouseAdapter {
         y = e.getY();
         rectangle = new RectangleModel(x,y, 0,0);
         rectangle.setEditable(true);
+        rectangle.setDashed(true);
         this.formContainer.addForm(rectangle);
     }
 
@@ -73,10 +74,10 @@ public class DrawRectState extends MouseAdapter {
         boolean colision = false; 
         // Vérifie si le rectangle est valide et s'il n'y a pas de collision avec d'autres formes.
         if(rectangle != null) {
-            this.formContainer.removeForm(rectangle);
             for (AbstractForm fo : this.formContainer.getMainContainerList()) {
                 if (fo != rectangle && rectangle.collision(fo)) {
                     colision = true;
+                    this.formContainer.removeForm(rectangle);
                     break; 
                 }  
             }
@@ -86,6 +87,7 @@ public class DrawRectState extends MouseAdapter {
                 command.executeCommand(); 
             }
         }
+        rectangle.setDashed(false);
         dragged = false;
     }
 }

@@ -16,7 +16,7 @@ public class DrawCercleState extends MouseAdapter {
     /** Le conteneur des formes où ajouter le cercle. */
     private FormContainer formesContainer; 
     /** Les coordonnées de la souris pour le début et la fin du dessin.*/
-    private int x1, y1;
+    private int centerX, centerY;
     /** Le cercle en cours de dessin. */
     private CercleModel cercle; 
     /** Permet de savoir si la souris est glissée */
@@ -39,10 +39,11 @@ public class DrawCercleState extends MouseAdapter {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        x1 = e.getX();
-        y1 = e.getY();
-        cercle = new CercleModel(x1,y1, 0);
+        centerX = e.getX();
+        centerY = e.getY();
+        cercle = new CercleModel(centerX,centerY, 0);
         cercle.setEditable(true);
+        cercle.setDashed(true);
         this.formesContainer.addForm(cercle);
     }
 
@@ -54,11 +55,16 @@ public class DrawCercleState extends MouseAdapter {
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        int diameter = cercle.computeDistance(x1, y1, e.getX(), e.getY()); 
-        cercle.setWidth(diameter); 
-        dragged = true;
+        int radius = cercle.computeDistance(centerX, centerY, e.getX(), e.getY());
+        int baseX = centerX - radius;
+        int baseY = centerY - radius; 
+        if (baseX > 0 && baseY > 0 && baseX + 2*radius < e.getComponent().getWidth() && baseY + 2*radius < e.getComponent().getHeight()) {
+            cercle.setX(baseX); cercle.setY(baseY);
+            cercle.setWidth(2*radius);
+            dragged = true;
+        }
     }
-
+    
     /**
      * Méthode appelée lorsque le bouton de la souris est relâché sur un composant.
      * Finalise le dessin du cercle et l'ajoute au conteneur des formes si les conditions sont remplies.
@@ -67,23 +73,24 @@ public class DrawCercleState extends MouseAdapter {
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-        boolean colision = false; // Indicateur de collision avec d'autres formes.
+        boolean colision = false; 
         
         // Vérifie si le cercle est valide et s'il n'y a pas de collision avec d'autres formes.
         if (cercle != null) {
-            this.formesContainer.removeForm(cercle);
             for (AbstractForm fo : this.formesContainer.getMainContainerList()) {
                 if (fo != cercle && cercle.collision(fo)) {
+                    this.formesContainer.removeForm(cercle);
                     colision = true;
-                    break; // Quitte la boucle dès qu'une collision est détectée.
+                    break; 
                 }  
             }
             // Vérifie les conditions pour ajouter le cercle au conteneur des formes.
-            if (dragged && !colision && cercle.computeDistance(x1, y1, e.getX(), e.getY()) >= 20) {
+            if (dragged && !colision && cercle.computeDistance(cercle.getX(), cercle.getY(), e.getX(), e.getY()) >= 20) {
                 CreateCommand command = new CreateCommand(cercle, formesContainer); 
                 command.executeCommand(); 
             }
         }
+        cercle.setDashed(false);
         dragged = false;
     }
 }
