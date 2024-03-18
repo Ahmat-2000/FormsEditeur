@@ -10,8 +10,8 @@ import view.ViewFormContainer;
  * Le contrôleur des boutons qui réagit aux événements de clic.
  */
 public class BtnController implements ActionListener {
-    private ViewFormContainer viewContainer; // La vue principale de l'application.
-    private MouseAdapter viewState; // L'état d'interaction de la vue.
+    private ViewFormContainer viewContainer; 
+    private MouseAdapter viewState; 
 
     /**
      * Constructeur du contrôleur des boutons.
@@ -20,8 +20,8 @@ public class BtnController implements ActionListener {
      * @param viewState L'état d'interaction de la vue.
      */
     public BtnController(ViewFormContainer viewContainer, MouseAdapter viewState) {
-        this.viewContainer = viewContainer; // Initialise la vue principale de l'application.
-        this.viewState = viewState; // Initialise l'état d'interaction de la vue.
+        this.viewContainer = viewContainer; 
+        this.viewState = viewState; 
     }
 
     @Override

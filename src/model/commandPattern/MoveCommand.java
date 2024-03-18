@@ -31,13 +31,13 @@ public class MoveCommand implements ICommand {
      * @param x La nouvelle position horizontale (X) de la forme.
      * @param y La nouvelle position verticale (Y) de la forme.
      */
-    public MoveCommand(AbstractForm form, int x, int y) {
+    public MoveCommand(AbstractForm form, int oldX, int oldY) {
         this.form = form;
-        this.x = x;
-        this.y = y;
         // Sauvegarde les positions initiales de la forme pour une éventuelle annulation.
-        this.oldX = form.getX();
-        this.oldY = form.getY();
+        this.oldX = oldX;
+        this.oldY = oldY;
+        this.x = form.getX();
+        this.y = form.getY();
     }
 
     /**
@@ -46,7 +46,6 @@ public class MoveCommand implements ICommand {
      */
     @Override
     public void executeCommand() {
-        form.moveForm(x, y); 
         CommandHistory.getUndoList().push(this); 
         CommandHistory.getRedoList().clear(); 
     }
@@ -57,7 +56,8 @@ public class MoveCommand implements ICommand {
      */
     @Override
     public void undo() {
-        form.moveForm(oldX, oldY); 
+        form.setX(oldX);
+        form.setY(oldY);
         CommandHistory.getRedoList().push(this); 
     }
 
@@ -67,7 +67,8 @@ public class MoveCommand implements ICommand {
      */
     @Override
     public void redo() {
-        form.moveForm(x, y); 
+        form.setX(x);
+        form.setY(y);
         CommandHistory.getUndoList().push(this); 
     }
 }

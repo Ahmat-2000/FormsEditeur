@@ -39,29 +39,6 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
         this.width = width;
         this.height = height;
     }
-
-    /**
-     * Déplace la forme en modifiant sa position en x.
-     * 
-     * @param deltaX La nouvelle position x de la forme.
-     */
-    @Override
-    public void moveFormX(int deltaX) {
-        this.x = deltaX;
-        this.fireChange(); 
-    }
-
-    /**
-     * Déplace la forme en modifiant sa position en y.
-     * 
-     * @param deltaY La nouvelle position y de la forme.
-     */
-    @Override
-    public void moveFormY(int deltaY) {
-        this.y = deltaY;
-        this.fireChange(); 
-    }
-
     /**
      * Vérifie si un point donné est sur la surface de la forme.
      * 
@@ -82,8 +59,8 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
      */
     @Override
     public void moveForm(int deltaX, int deltaY) {
-        this.x = deltaX;
-        this.y = deltaY;
+        this.x += deltaX;
+        this.y += deltaY;
         this.fireChange(); 
     }
 
@@ -204,5 +181,25 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
      */
     @Override
     public abstract void resize(int x, int y);
+    
+    /**
+     * Modifie la valeur de x.
+     * 
+     * @param x La valeur du décalage en x.
+     */
+    @Override
+    public void setX(int x){
+        this.x = x;
+        this.fireChange();
+    }
 
+    /**
+     * Modifie la valeur de y.
+     * 
+     * @param y La valeur du décalage en y.
+     */
+    public void setY(int y){
+        this.y = y;
+        this.fireChange();
+    }
 }

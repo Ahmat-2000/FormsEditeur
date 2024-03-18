@@ -22,18 +22,18 @@ public interface IForm {
     public void moveForm(int deltaX, int deltaY);
 
     /**
-     * Déplace la forme horizontalement selon la valeur spécifiée pour le décalage en x.
+     * Modifie la valeur de x.
      * 
-     * @param deltaX La valeur du décalage en x.
+     * @param x La valeur du décalage en x.
      */
-    public void moveFormX(int deltaX);
+    public void setX(int x);
 
     /**
-     * Déplace la forme verticalement selon la valeur spécifiée pour le décalage en y.
+     * Modifie la valeur de y.
      * 
-     * @param deltaY La valeur du décalage en y.
+     * @param y La valeur du décalage en y.
      */
-    public void moveFormY(int deltaY);
+    public void setY(int y);
 
     /**
      * Redimensionne la forme en fonction des coordonnées spécifiées.

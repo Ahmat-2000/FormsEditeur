@@ -14,8 +14,10 @@ import model.commandPattern.MoveCommand;
 public class MoveState extends MouseAdapter {
     /** Le conteneur des formes où ajouter le cercle. */
     private FormContainer formContainer; 
-    /** Les coordonnées de la souris lors d'un click.*/
-    private int startX, startY;
+    /** Les coordonnées iniatiaux de la forme*/
+    private int initialX, initialY;
+    /** Les coordonnées de la souris lors du premier click.*/
+    private int predX,predY;
     /** La forme en cours de déplacement. */
     private AbstractForm form; 
     /** Permet de savoir si la souris est glissée */
@@ -38,11 +40,13 @@ public class MoveState extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
         form = null;
+        predX = e.getX();
+        predY = e.getY();
         for (AbstractForm f : this.formContainer.getMainContainerList()) {
-            if (f.onSurface(e.getX(),e.getY()) && f.isEditable()) {
+            if (f.onSurface(predX,predY) && f.isEditable()) {
                 form = f;
-                startX = form.getX(); 
-                startY = form.getY();
+                initialX = form.getX(); 
+                initialY = form.getY();
                 break;
             }
         }
@@ -56,8 +60,14 @@ public class MoveState extends MouseAdapter {
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        if (form != null) { 
-            form.moveForm(e.getX(), e.getY()); 
+        int dx = e.getX() - predX;
+        int dy = e.getY() - predY;
+        int width = dx + form.getX() + form.getWidth();
+        int height = dy + form.getY() + form.getHeight();
+        if(form != null &&  dx + form.getX() > 2 && width < e.getComponent().getWidth()-2 && dy + form.getY() > 2 && height < e.getComponent().getHeight() -2) {
+            form.moveForm(dx,dy); 
+            predX = e.getX();
+            predY = e.getY();
             dragged = true;
         }
     }
@@ -74,14 +84,14 @@ public class MoveState extends MouseAdapter {
         if (dragged == true && form != null) {
             for (AbstractForm fo : this.formContainer.getMainContainerList()) {
                 if (fo != form && form.collision(fo)) { 
-                    form.moveForm(startX, startY); 
+                    form.setX(initialX);
+                    form.setY(initialY);
                     collision = true;
                     break; 
                 }  
             }
-            if ( !collision) {
-                form.moveForm(startX, startY); 
-                MoveCommand command = new MoveCommand(form, e.getX(), e.getY()); 
+            if (!collision) {
+                MoveCommand command = new MoveCommand(form, initialX,initialY); 
                 command.executeCommand();
             }
         }
