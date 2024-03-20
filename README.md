@@ -35,7 +35,7 @@ Le projet est organisé comme suit :
 
 ## Diagrame
 
-![diagram](src/images/patron.dia}
+![diagram](src/images/Dia.png}
 
 ### Démarrage rapide
 
