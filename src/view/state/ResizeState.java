@@ -18,8 +18,7 @@ public class ResizeState extends MouseAdapter {
     private int width, height; 
     /** La forme en cours de redimensionnement. */
     private AbstractForm form;
-    /** Permet de savoir si la souris est glissée */
-    private boolean dragged = false;
+
 
     /**
      * Constructeur de ResizeState qui prend en paramètre le conteneur des formes.
@@ -44,11 +43,22 @@ public class ResizeState extends MouseAdapter {
                 form = f;
                 this.width = f.getWidth(); 
                 this.height = f.getHeight();
+                form.setDashed(true);
                 break;
             }
         }
     }
+    @Override
+    public void mouseMoved(MouseEvent e){
+        form = null;
+        for (AbstractForm f : this.formContainer.getMainContainerList()) {            
+            if (!f.onSurface(e.getX(),e.getY()) && f.isEditable()) {
+                form = f;
+                form.setDashed(false);
+            }
+        }
 
+    }
     /**
      * Méthode appelée lorsque le bouton de la souris est pressé sur un composant et que la souris est ensuite déplacée.
      * Redimensionne la forme en fonction de la position actuelle de la souris pour afficher le redimensionnement en cours.
@@ -59,7 +69,7 @@ public class ResizeState extends MouseAdapter {
     public void mouseDragged(MouseEvent e) {
         if (form != null) { 
             form.resize(e.getX(), e.getY()); 
-            dragged = true;
+            this.formContainer.collisionDetection(form);
         }
     }
 
@@ -71,23 +81,15 @@ public class ResizeState extends MouseAdapter {
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-        boolean collision = false; // Indicateur de collision avec d'autres formes.
-        if(dragged && form != null) {
-            for (AbstractForm fo : this.formContainer.getMainContainerList()) {
-                if (fo != form && form.collision(fo)) { 
-                    form.setWidth(width); 
-                    form.setHeight(height);
-                    collision = true;
-                    break; // Quitte la boucle dès qu'une collision est détectée.
-                }  
-            }
-            if ( !collision) { 
-                form.setWidth(width); 
-                form.setHeight(height);
+        if(form != null) {
+            form.setWidth(width); 
+            form.setHeight(height);
+            if (!form.isCollision()){
                 ResizeCommand command = new ResizeCommand(form, e.getX(), e.getY()); 
                 command.executeCommand(); 
             }
+            form.setDashed(false);
+            form.setCollision(false);
         }
-        dragged = false;
     }
 }

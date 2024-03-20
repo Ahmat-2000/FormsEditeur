@@ -5,9 +5,9 @@ import model.observerPattern.AbstractListenableModel;
 import model.observerPattern.ModelListener;
 
 /**
- * La classe {@code FormContainer} sert de conteneur pour stocker et gérer une collection de formes géométriques.<br/>
- * Elle étend {@code AbstractListenableModel} afin de pouvoir notifier les écouteurs de tout changement survenant dans le conteneur.<br/>
- * De plus, elle implémente {@code ModelListener} pour pouvoir réagir aux modifications des formes individuelles contenues.<br/>
+ * La classe FormContainer sert de conteneur pour stocker et gérer une collection de formes géométriques.<br/>
+ * Elle étend AbstractListenableModel afin de pouvoir notifier les écouteurs de tout changement survenant dans le conteneur.<br/>
+ * De plus, elle implémente ModelListener pour pouvoir réagir aux modifications des formes individuelles contenues.<br/>
  */
 public class FormContainer extends AbstractListenableModel implements ModelListener {
 
@@ -15,7 +15,7 @@ public class FormContainer extends AbstractListenableModel implements ModelListe
     private ArrayList<AbstractForm> mainContainerList;
 
     /**
-     * Constructeur de {@code FormContainer}. Initialise la liste des formes.
+     * Constructeur de FormContainer. Initialise la liste des formes.
      */
     public FormContainer() {
         super();
@@ -24,7 +24,7 @@ public class FormContainer extends AbstractListenableModel implements ModelListe
 
     /**
      * Ajoute une forme au conteneur et s'inscrit comme écouteur des modifications de cette forme.
-     * Notifie tous les écouteurs de {@code FormContainer} qu'une forme a été ajoutée.
+     * Notifie tous les écouteurs de FormContainer qu'une forme a été ajoutée.
      * 
      * @param f La forme à ajouter au conteneur.
      */
@@ -35,7 +35,7 @@ public class FormContainer extends AbstractListenableModel implements ModelListe
     }
 
     /**
-     * Supprime une forme du conteneur si elle est modifiable. Notifie tous les écouteurs de {@code FormContainer}
+     * Supprime une forme du conteneur si elle est modifiable. Notifie tous les écouteurs de FormContainer
      * qu'une forme a été supprimée.
      * 
      * @param f La forme à supprimer du conteneur.
@@ -70,7 +70,7 @@ public class FormContainer extends AbstractListenableModel implements ModelListe
     /**
      * Crée et retourne une copie de la liste actuelle des formes dans le conteneur.
      * 
-     * @return Une nouvelle {@code ArrayList} contenant toutes les formes du conteneur.
+     * @return Une nouvelle ArrayList contenant toutes les formes du conteneur.
      */
     public ArrayList<AbstractForm> copyOfList() {
         return new ArrayList<>(this.mainContainerList);
@@ -79,15 +79,23 @@ public class FormContainer extends AbstractListenableModel implements ModelListe
     /**
      * Récupère la liste actuelle des formes contenues dans le conteneur.
      * 
-     * @return La liste actuelle des formes géométriques contenues dans {@code FormContainer}.
+     * @return La liste actuelle des formes géométriques contenues dans FormContainer.
      */
     public ArrayList<AbstractForm> getMainContainerList() {
         return this.mainContainerList;
     }
-
+    public void collisionDetection(AbstractForm form){
+        form.setCollision(false);   
+            for (AbstractForm fo : this.mainContainerList) {
+                if (fo != form && form.collision(fo)) { 
+                    form.setCollision(true);   
+                    break; // Quitte la boucle dès qu'une collision est détectée.
+                }  
+            }
+    }
     /**
      * Réagit aux changements signalés par une forme spécifique contenue dans le conteneur.
-     * Cette méthode permet de notifier les écouteurs de {@code FormContainer} que l'un de ses éléments a changé.
+     * Cette méthode permet de notifier les écouteurs de FormContainer que l'un de ses éléments a changé.
      * 
      * @param source L'objet source du changement, typiquement une forme géométrique contenue dans le conteneur.
      */

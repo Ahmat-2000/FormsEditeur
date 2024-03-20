@@ -4,7 +4,7 @@ import model.observerPattern.AbstractListenableModel;
 
 /**
  * Classe abstraite représentant une forme géométrique de base. Cette classe est écoutable et peut notifier
- * des écouteurs de changements grâce à l'héritage de {@code AbstractListenableModel}. Elle implémente {@code IForm}
+ * des écouteurs de changements grâce à l'héritage d'AbstractListenableModel. Elle implémente  IForm
  * pour définir des comportements spécifiques aux formes géométriques.
  */
 public abstract class AbstractForm extends AbstractListenableModel implements IForm {
@@ -27,8 +27,12 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
     /** Indicateur permettant de savoir si la forme est en création */
     protected boolean dashed = false;
 
+    /** Indicateur permettant de savoir si la forme est en collision */
+    protected boolean collision = false;
+
+    
     /**
-     * Constructeur d'{@code AbstractForm}.
+     * Constructeur d'AbstractForm.
      * 
      * @param x La position x initiale de la forme.
      * @param y La position y initiale de la forme.
@@ -47,7 +51,7 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
      * 
      * @param x La position x du point à vérifier.
      * @param y La position y du point à vérifier.
-     * @return {@code true} si le point est sur la forme, sinon {@code false}.
+     * @return true si le point est sur la forme, sinon false.
      */
     @Override
     public boolean onSurface(int x, int y) {
@@ -71,7 +75,7 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
      * Vérifie s'il y a une collision entre cette forme et une autre forme spécifiée.
      * 
      * @param f L'autre forme à vérifier pour une collision.
-     * @return {@code true} si une collision est détectée, sinon {@code false}.
+     * @return  true si une collision est détectée, sinon  false.
      */
     @Override
     public boolean collision(AbstractForm f) {
@@ -151,7 +155,7 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
     /**
      * Vérifie si la forme est modifiable.
      * 
-     * @return {@code true} si la forme est modifiable, sinon {@code false}.
+     * @return true si la forme est modifiable, sinon  false.
      */
     public boolean isEditable() {
         return editable;
@@ -160,7 +164,7 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
     /**
      * Définit si la forme doit être modifiable ou non.
      * 
-     * @param editable {@code true} pour rendre la forme modifiable, sinon {@code false}.
+     * @param editable  true} pour rendre la forme modifiable, sinon  false}.
      */
     public void setEditable(boolean editable) {
         this.editable = editable;
@@ -211,5 +215,12 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
     public void setDashed(boolean dashed) {
         this.dashed = dashed;
         this.fireChange();
+    }
+
+    public boolean isCollision() {
+        return collision;
+    }
+    public void setCollision(boolean collision) {
+        this.collision = collision;
     }
 }

@@ -57,4 +57,7 @@ public interface IForm {
      * @return true si une collision est détectée, sinon false.
      */
     public boolean collision(AbstractForm f);
+
+    public boolean isCollision() ;
+    public void setCollision(boolean collision);
 }

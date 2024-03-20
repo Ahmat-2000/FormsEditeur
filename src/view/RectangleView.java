@@ -28,16 +28,19 @@ public class RectangleView extends AbstractFormView{
      * @param g Le contexte graphique sur lequel dessiner le rectangle.
      */
     public void dessiner(Graphics graphics) {
-        Graphics2D g = (Graphics2D) graphics.create(); // Create a Graphics2D object from g
+        Graphics2D g = (Graphics2D) graphics.create();
 
-        float[] dashPattern = {10, 10}; // Define the dash pattern (10 pixels filled, 10 pixels empty)
-        Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10, dashPattern, 0);
+        float[] dashPattern = {5, 5}; 
+        Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1, dashPattern, 0);
 
         if (forme.isEditable() ) {
-            if (forme.isDashed()) {
-                g.setStroke(dashed); // Set the stroke of the Graphics2D object to the dashed pattern
-            }
             g.setColor(new Color(0, 0, 26));
+            if (forme.isDashed()) {
+                g.setStroke(dashed); 
+            }
+            if(forme.isCollision()) {
+                g.setColor(Color.RED);
+            }
             g.drawRect(forme.getX(),forme.getY(),forme.getWidth(),forme.getHeight());  
         }else{
             g.setColor(new Color(140, 192, 132));

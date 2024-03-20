@@ -3,7 +3,6 @@ package view.state;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import model.AbstractForm;
 import model.FormContainer;
 import model.RectangleModel;
 import model.commandPattern.CreateCommand;
@@ -16,11 +15,11 @@ public class DrawRectState extends MouseAdapter {
     /** Le conteneur des formes où ajouter le cercle. */
     private FormContainer formContainer; 
     /** Les coordonnées de la souris pour le début et la fin du dessin.*/
-    private int x, y;
+    private int initialX, initialY;
     /**  Le rectangle en cours de dessin.*/
     private RectangleModel rectangle; 
     /** Permet de savoir si la souris est glissée */
-    private boolean dragged = false;
+    // private boolean dragged = false;
 
     /**
      * Constructeur de DrawRectState qui prend en paramètre le conteneur des formes.
@@ -40,9 +39,9 @@ public class DrawRectState extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
         rectangle = null; 
-        x = e.getX();
-        y = e.getY();
-        rectangle = new RectangleModel(x,y, 0,0);
+        initialX = e.getX();
+        initialY = e.getY();
+        rectangle = new RectangleModel(initialX,initialY, 0,0);
         rectangle.setEditable(true);
         rectangle.setDashed(true);
         this.formContainer.addForm(rectangle);
@@ -56,11 +55,13 @@ public class DrawRectState extends MouseAdapter {
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        int width = Math.abs(x -  e.getX()); 
-        int height = Math.abs(y -  e.getY()); 
-        rectangle.setWidth(width); 
-        rectangle.setHeight(height); 
-        dragged = true;
+        int width = Math.abs(initialX -  e.getX()); 
+        int height = Math.abs(initialY -  e.getY()); 
+        if (rectangle.getX() > 0 && rectangle.getY() > 0 && width + rectangle.getX() < e.getComponent().getWidth() && height + rectangle.getY() < e.getComponent().getHeight()) {
+            rectangle.setWidth(width); 
+            rectangle.setHeight(height); 
+            this.formContainer.collisionDetection(rectangle);
+        }
     }
 
     /**
@@ -71,23 +72,14 @@ public class DrawRectState extends MouseAdapter {
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-        boolean colision = false; 
-        // Vérifie si le rectangle est valide et s'il n'y a pas de collision avec d'autres formes.
         if(rectangle != null) {
-            for (AbstractForm fo : this.formContainer.getMainContainerList()) {
-                if (fo != rectangle && rectangle.collision(fo)) {
-                    colision = true;
-                    this.formContainer.removeForm(rectangle);
-                    break; 
-                }  
-            }
-            // Vérifie les conditions pour ajouter le rectangle au conteneur des formes.
-            if(dragged && !colision  && rectangle.computeDistance(x, y, e.getX(), e.getY()) >= 20 ) {
+            this.formContainer.removeForm(rectangle);
+            // On ajoute le rectangle au conteneur des formes si son width est >= 10. et qu'il n'y a pas des collisions
+            if(!rectangle.isCollision() && rectangle.getHeight() >= 10 && rectangle.getWidth() >= 10 ) {
                 CreateCommand command = new CreateCommand(rectangle, formContainer); 
-                command.executeCommand(); 
+                command.executeCommand();
             }
         }
         rectangle.setDashed(false);
-        dragged = false;
     }
 }

@@ -3,7 +3,6 @@ package view.state;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import model.AbstractForm;
 import model.CercleModel;
 import model.FormContainer;
 import model.commandPattern.CreateCommand;
@@ -14,21 +13,19 @@ import model.commandPattern.CreateCommand;
  */
 public class DrawCercleState extends MouseAdapter {
     /** Le conteneur des formes où ajouter le cercle. */
-    private FormContainer formesContainer; 
+    private FormContainer formContainer; 
     /** Les coordonnées de la souris pour le début et la fin du dessin.*/
     private int centerX, centerY;
     /** Le cercle en cours de dessin. */
     private CercleModel cercle; 
-    /** Permet de savoir si la souris est glissée */
-    private boolean dragged = false;
 
     /**
      * Constructeur de DrawCercleState qui prend en paramètre le conteneur des formes.
      * 
-     * @param formesContainer Le conteneur des formes où ajouter le cercle.
+     * @param formContainer Le conteneur des formes où ajouter le cercle.
      */
-    public DrawCercleState(FormContainer formesContainer) {
-        this.formesContainer = formesContainer;
+    public DrawCercleState(FormContainer formContainer) {
+        this.formContainer = formContainer;
     }
 
     /**
@@ -44,7 +41,7 @@ public class DrawCercleState extends MouseAdapter {
         cercle = new CercleModel(centerX,centerY, 0);
         cercle.setEditable(true);
         cercle.setDashed(true);
-        this.formesContainer.addForm(cercle);
+        this.formContainer.addForm(cercle);
     }
 
     /**
@@ -61,7 +58,7 @@ public class DrawCercleState extends MouseAdapter {
         if (baseX > 0 && baseY > 0 && baseX + 2*radius < e.getComponent().getWidth() && baseY + 2*radius < e.getComponent().getHeight()) {
             cercle.setX(baseX); cercle.setY(baseY);
             cercle.setWidth(2*radius);
-            dragged = true;
+            this.formContainer.collisionDetection(cercle);
         }
     }
     
@@ -73,24 +70,14 @@ public class DrawCercleState extends MouseAdapter {
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-        boolean colision = false; 
-        
-        // Vérifie si le cercle est valide et s'il n'y a pas de collision avec d'autres formes.
         if (cercle != null) {
-            for (AbstractForm fo : this.formesContainer.getMainContainerList()) {
-                if (fo != cercle && cercle.collision(fo)) {
-                    this.formesContainer.removeForm(cercle);
-                    colision = true;
-                    break; 
-                }  
-            }
-            // Vérifie les conditions pour ajouter le cercle au conteneur des formes.
-            if (dragged && !colision && cercle.computeDistance(cercle.getX(), cercle.getY(), e.getX(), e.getY()) >= 20) {
-                CreateCommand command = new CreateCommand(cercle, formesContainer); 
+            this.formContainer.removeForm(cercle);
+            // On ajoute le cercle au conteneur des formes si son width est >= 10. et qu'il n'y a pas des collisions
+            if ( !cercle.isCollision() && cercle.getHeight() >= 10 && cercle.getWidth() >= 10 ) {
+                CreateCommand command = new CreateCommand(cercle, formContainer); 
                 command.executeCommand(); 
             }
         }
         cercle.setDashed(false);
-        dragged = false;
     }
 }

@@ -55,7 +55,7 @@ public class Header extends JPanel {
     protected JButton resize;
 
     /**
-     * Construit un panneau {@code Header} avec des contrôles spécifiques pour dessiner et manipuler des formes.
+     * Construit un panneau Header avec des contrôles spécifiques pour dessiner et manipuler des formes.
      * 
      * @param viewContainer   Le conteneur responsable de l'aspect vue dans l'architecture MVC.
      * @param formContainer   Le conteneur qui détient l'aspect modèle, spécifiquement les formes et leurs propriétés.

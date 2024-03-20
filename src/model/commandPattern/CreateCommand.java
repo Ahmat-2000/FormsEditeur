@@ -38,7 +38,7 @@ public class CreateCommand implements ICommand {
      */
     @Override
     public void executeCommand() {
-        // this.formContainer.addForm(form);
+        this.formContainer.addForm(form);
         CommandHistory.getUndoList().push(this);
         CommandHistory.getRedoList().clear(); 
     }

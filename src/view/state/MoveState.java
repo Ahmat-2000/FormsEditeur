@@ -20,8 +20,6 @@ public class MoveState extends MouseAdapter {
     private int predX,predY;
     /** La forme en cours de déplacement. */
     private AbstractForm form; 
-    /** Permet de savoir si la souris est glissée */
-    private boolean dragged = false;
     /**
      * Constructeur de MoveState qui prend en paramètre le conteneur des formes.
      * 
@@ -47,6 +45,7 @@ public class MoveState extends MouseAdapter {
                 form = f;
                 initialX = form.getX(); 
                 initialY = form.getY();
+                form.setDashed(true);
                 break;
             }
         }
@@ -69,7 +68,7 @@ public class MoveState extends MouseAdapter {
                 form.moveForm(dx,dy); 
                 predX = e.getX();
                 predY = e.getY();
-                dragged = true;
+                this.formContainer.collisionDetection(form);
             }
         }
     }
@@ -82,21 +81,17 @@ public class MoveState extends MouseAdapter {
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-        boolean collision = false;
-        if (dragged == true && form != null) {
-            for (AbstractForm fo : this.formContainer.getMainContainerList()) {
-                if (fo != form && form.collision(fo)) { 
-                    form.setX(initialX);
-                    form.setY(initialY);
-                    collision = true;
-                    break; 
-                }  
-            }
-            if (!collision) {
+        if (form != null) {
+            if (form.isCollision()) { 
+                form.setX(initialX);
+                form.setY(initialY);
+            }  
+            else {
                 MoveCommand command = new MoveCommand(form, initialX,initialY); 
                 command.executeCommand();
             }
+            form.setDashed(false);
+            form.setCollision(false);
         }
-        dragged = false;
     }
 }
