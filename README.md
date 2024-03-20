@@ -17,12 +17,12 @@ Ce projet permet aux utilisateurs de créer, déplacer, et modifier des formes g
 
 Le projet est organisé comme suit :
 
-    src: Contient les sources du projet, y compris les contrôleurs, modèles et vues.
-    build: Répertoire de build contenant les fichiers .class compilés.
-    dist: Contient les archives exécutables du projet, y compris le fichier .jar.
-    docs: Documentation générée automatiquement pour le projet.
-    lib: Bibliothèques tierces nécessaires pour le projet.
-    test: Contient les tests unitaires pour le projet.
+    - # src: Contient les sources du projet, y compris les contrôleurs, modèles et vues.
+    - # build: Répertoire de build contenant les fichiers .class compilés.
+    - # dist: Contient les archives exécutables du projet, y compris le fichier .jar.
+    - # docs: Documentation générée automatiquement pour le projet.
+    - # lib: Bibliothèques tierces nécessaires pour le projet.
+    - # test: Contient les tests unitaires pour le projet.
     
 ### Démarrage rapide
 
