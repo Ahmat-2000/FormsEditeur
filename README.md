@@ -33,6 +33,10 @@ Le projet est organisé comme suit :
 ├── test   Contient les tests unitaires pour le projet.
 ```
 
+## Diagrame
+
+![diagram](images/Dia.png)
+
 ### Démarrage rapide
 
 Pour lancer l'application, suivez ces instruction
