@@ -39,7 +39,8 @@ cd JeuDeFormes
 3. Compilez le projet (si vous utilisez Apache Ant) :
 
 ```bash
-ant compile
+# Si vous faites des modifications, il suffit de faire
+ant 
 ```
 
 4. Exécutez le fichier JAR :
