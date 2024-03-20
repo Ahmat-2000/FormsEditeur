@@ -13,9 +13,20 @@ Jeu De Formes est un projet Java conçu pour illustrer l'utilisation de divers p
 
 Ce projet permet aux utilisateurs de créer, déplacer, et modifier des formes géométriques simples telles que des cercles et des rectangles sur une interface graphique.
 
-## Démarrage rapide
+### Structure du Projet
 
-Pour exécuter le projet sur votre machine locale, suivez ces étapes.
+Le projet est organisé comme suit :
+
+    src: Contient les sources du projet, y compris les contrôleurs, modèles et vues.
+    build: Répertoire de build contenant les fichiers .class compilés.
+    dist: Contient les archives exécutables du projet, y compris le fichier .jar.
+    docs: Documentation générée automatiquement pour le projet.
+    lib: Bibliothèques tierces nécessaires pour le projet.
+    test: Contient les tests unitaires pour le projet.
+    
+### Démarrage rapide
+
+Pour lancer l'application, suivez ces instruction
 
 ### Prérequis
 
