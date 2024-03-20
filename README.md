@@ -50,7 +50,7 @@ cd JeuDeFormes
 3. Compilez le projet (si vous utilisez Apache Ant) :
 
 ```bash
-# Si vous faites des modifications, il suffit de faire
+# Si vous avez fait des modifications, il suffit de lancer la commande ant
 ant 
 ```
 
@@ -62,15 +62,17 @@ java -jar dist/JeuDeFormes-1.0.jar
 
 ## Utilisation
 
-Le jeu démarre avec une interface graphique où vous pouvez choisir entre ajouter des formes, les déplacer, ou modifier leurs tailles. Utilisez les boutons fournis dans l'interface pour interagir avec les formes.
+Le jeu démarre avec une interface graphique où vous pouvez choisir entre ajouter des formes, les déplacer, les supprimer ou modifier leurs tailles. 
+
+Utilisez les boutons fournis dans l'interface pour interagir avec les formes.
 
 ## Contribuer
 
-Les contributions à ce projet sont les bienvenues. Veuillez consulter le fichier `CONTRIBUTING.md` pour plus de détails sur comment contribuer.
+Les contributions à ce projet sont les bienvenues.
 
 ## Licence
 
-Ce projet est distribué sous la Licence MIT. Voir le fichier `LICENSE` pour plus d'informations.
+Ce projet est en open source
 
 ## Contact
 
