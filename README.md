@@ -3,7 +3,8 @@
 
 ## Description
 
-Jeu De Formes est un projet Java conçu pour illustrer l'utilisation de divers patterns de conception, notamment 
+Jeu De Formes est un projet Java conçu pour illustrer l'utilisation de divers patterns de conception, notamment :
+
 - Le pattern MVC
 - Le pattern Commande pour les actions de dessin 
 - Le pattern Observateur pour la mise à jour des vues 
