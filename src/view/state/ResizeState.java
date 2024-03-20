@@ -1,5 +1,6 @@
 package view.state;
 
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -19,6 +20,7 @@ public class ResizeState extends MouseAdapter {
     /** La forme en cours de redimensionnement. */
     private AbstractForm form;
 
+    private boolean resizable = false;
 
     /**
      * Constructeur de ResizeState qui prend en paramètre le conteneur des formes.
@@ -37,27 +39,31 @@ public class ResizeState extends MouseAdapter {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        form = null;
-        for (AbstractForm f : this.formContainer.getMainContainerList()) {            
-            if (f.onSurface(e.getX(),e.getY()) && f.isEditable()) {
-                form = f;
-                this.width = f.getWidth(); 
-                this.height = f.getHeight();
-                form.setDashed(true);
-                break;
+        if (form != null) {
+            this.width = form.getWidth(); 
+            this.height = form.getHeight();
+            form.setDashed(true);
+            if (form.getWidth() + form.getX() <=  e.getX() + 20 && form.getWidth() + form.getX() >=  e.getX() - 20 &&
+                form.getHeight() + form.getY() <=  e.getY() + 20 && form.getHeight() + form.getY() >=  e.getY() - 20
+            ) {
+                resizable = true;
+                e.getComponent().setCursor(new Cursor(Cursor.SE_RESIZE_CURSOR));
             }
         }
     }
-    @Override
+    @Override 
     public void mouseMoved(MouseEvent e){
         form = null;
-        for (AbstractForm f : this.formContainer.getMainContainerList()) {            
-            if (!f.onSurface(e.getX(),e.getY()) && f.isEditable()) {
+        for (AbstractForm f : this.formContainer.getMainContainerList()) {
+            if (f.onSurface(e.getX(),e.getY()) && f.isEditable()) {
+                f.setShowResize(true);
                 form = f;
-                form.setDashed(false);
+                break;
+            }
+            else {
+                f.setShowResize(false);    
             }
         }
-
     }
     /**
      * Méthode appelée lorsque le bouton de la souris est pressé sur un composant et que la souris est ensuite déplacée.
@@ -67,12 +73,14 @@ public class ResizeState extends MouseAdapter {
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        if (form != null) { 
+        System.out.println(resizable);
+        if (form != null && resizable && e.getX() < e.getComponent().getWidth() - 2 && e.getY() < e.getComponent().getHeight() - 2) 
+        { 
             form.resize(e.getX(), e.getY()); 
             this.formContainer.collisionDetection(form);
         }
     }
-
+    
     /**
      * Méthode appelée lorsque le bouton de la souris est relâché sur un composant.
      * Finalise le redimensionnement de la forme et exécute la commande de redimensionnement si les conditions sont remplies.
@@ -84,12 +92,14 @@ public class ResizeState extends MouseAdapter {
         if(form != null) {
             form.setWidth(width); 
             form.setHeight(height);
-            if (!form.isCollision()){
+            if (resizable && !form.isCollision() && e.getX() - form.getX() >= 10 && e.getY() - form.getY() >= 10){
                 ResizeCommand command = new ResizeCommand(form, e.getX(), e.getY()); 
                 command.executeCommand(); 
             }
             form.setDashed(false);
             form.setCollision(false);
         }
+        e.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        resizable = false;
     }
 }

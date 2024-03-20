@@ -1,5 +1,6 @@
 package view.state;
 
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -18,8 +19,6 @@ public class DrawRectState extends MouseAdapter {
     private int initialX, initialY;
     /**  Le rectangle en cours de dessin.*/
     private RectangleModel rectangle; 
-    /** Permet de savoir si la souris est glissée */
-    // private boolean dragged = false;
 
     /**
      * Constructeur de DrawRectState qui prend en paramètre le conteneur des formes.
@@ -46,7 +45,14 @@ public class DrawRectState extends MouseAdapter {
         rectangle.setDashed(true);
         this.formContainer.addForm(rectangle);
     }
-
+    @Override 
+    public void mouseEntered(MouseEvent e){
+        e.getComponent().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+    }
+    @Override 
+    public void mouseExited(MouseEvent e){
+        e.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
     /**
      * Méthode appelée lorsque le bouton de la souris est pressé sur un composant et que la souris est ensuite déplacée.
      * Redimensionne le rectangle en fonction de la position actuelle de la souris pour afficher le dessin en cours.

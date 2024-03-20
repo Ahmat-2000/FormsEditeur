@@ -32,6 +32,7 @@ public class BtnController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Supprime les écouteurs d'événements de l'état d'interaction actuel de la vue.
         this.viewContainer.removeListeners(this.viewContainer.getState());
+
         // Définit le nouvel état d'interaction de la vue avec celui associé à ce contrôleur.
         this.viewContainer.setState(viewState);
         // Ajoute les écouteurs d'événements du nouvel état d'interaction à la vue.

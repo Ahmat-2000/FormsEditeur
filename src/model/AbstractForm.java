@@ -29,7 +29,9 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
 
     /** Indicateur permettant de savoir si la forme est en collision */
     protected boolean collision = false;
-
+    /** Indicateur permettant de savoir si la forme est en mode resize */
+    protected boolean showResize = false;
+    
     
     /**
      * Constructeur d'AbstractForm.
@@ -222,5 +224,13 @@ public abstract class AbstractForm extends AbstractListenableModel implements IF
     }
     public void setCollision(boolean collision) {
         this.collision = collision;
+        this.fireChange();
+    }
+    public boolean isShowResize() {
+        return showResize;
+    }
+    public void setShowResize(boolean showResize) {
+        this.showResize = showResize;
+        this.fireChange();
     }
 }

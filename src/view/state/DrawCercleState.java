@@ -1,5 +1,6 @@
 package view.state;
 
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -55,13 +56,16 @@ public class DrawCercleState extends MouseAdapter {
         int radius = cercle.computeDistance(centerX, centerY, e.getX(), e.getY());
         int baseX = centerX - radius;
         int baseY = centerY - radius; 
-        if (baseX > 0 && baseY > 0 && baseX + 2*radius < e.getComponent().getWidth() && baseY + 2*radius < e.getComponent().getHeight()) {
+        if (baseX > 0 && baseY > 0 && baseX + radius < e.getComponent().getWidth() && baseY + radius < e.getComponent().getHeight()) {
             cercle.setX(baseX); cercle.setY(baseY);
             cercle.setWidth(2*radius);
             this.formContainer.collisionDetection(cercle);
         }
     }
-    
+    @Override 
+    public void mouseEntered(MouseEvent e){
+        e.getComponent().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+    }
     /**
      * Méthode appelée lorsque le bouton de la souris est relâché sur un composant.
      * Finalise le dessin du cercle et l'ajoute au conteneur des formes si les conditions sont remplies.

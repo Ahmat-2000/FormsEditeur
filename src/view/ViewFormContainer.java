@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 
@@ -17,20 +18,20 @@ public class ViewFormContainer extends JPanel implements ModelListener {
     /** Le gestionnaire d'état actuel pour interagir avec les formes.*/
     private MouseAdapter state = null; 
     /**  Le conteneur de formes.*/
-    private FormContainer formesContainer; 
+    private FormContainer formContainer; 
     /** L'usine de fabrication de vues. */
     private AbstractViewFactory viewFactory;
 
     /**
      * Constructeur de la classe ViewFormContainer.
      * 
-     * @param formesContainer Le conteneur de formes à afficher.
+     * @param formContainer Le conteneur de formes à afficher.
      * @param viewFactory L'usine de fabrication de vues.
      */
-    public ViewFormContainer(FormContainer formesContainer, AbstractViewFactory viewFactory) {
-        this.formesContainer = formesContainer; 
+    public ViewFormContainer(FormContainer formContainer, AbstractViewFactory viewFactory) {
+        this.formContainer = formContainer; 
         this.viewFactory = viewFactory;
-        this.formesContainer.addModelListener(this); 
+        this.formContainer.addModelListener(this); 
         this.setLayout(null);
     }
 
@@ -84,6 +85,17 @@ public class ViewFormContainer extends JPanel implements ModelListener {
         this.revalidate();
     }
 
+    public void setCursor(int x, int y,Cursor cursor){
+        boolean not = true;
+        for (AbstractForm f : this.formContainer.getMainContainerList()) {
+            if (f.onSurface(x,y) && f.isEditable()) {
+                this.setCursor(cursor);
+                not = false;
+                break;
+            }  
+        }
+        if(not) this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
     @Override
     /**
      * Méthode de rendu graphique de ce panneau.
@@ -93,7 +105,7 @@ public class ViewFormContainer extends JPanel implements ModelListener {
      */
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); 
-        for (AbstractForm forme : formesContainer.getMainContainerList()) {
+        for (AbstractForm forme : formContainer.getMainContainerList()) {
             IView c = viewFactory.getInstance(forme); 
             if (c != null) {
                 c.dessiner(g);

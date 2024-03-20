@@ -30,7 +30,7 @@ public class CercleModel extends AbstractForm {
      */
     public CercleModel(int x1, int y1, int x2, int y2) {
         this(x1, y1, 0);
-        this.width = 2*this.computeDistance(x1, y1, x2, y2);
+        this.width = this.computeDistance(x1, y1, x2, y2);
         this.height = width;
     }
 

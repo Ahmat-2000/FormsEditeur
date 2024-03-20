@@ -1,11 +1,13 @@
 package view.state;
 
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import model.AbstractForm;
 import model.FormContainer;
 import model.commandPattern.MoveCommand;
+import view.ViewFormContainer;
 
 /**
  * La classe MoveState représente l'état de déplacement d'une forme dans l'application.
@@ -50,7 +52,11 @@ public class MoveState extends MouseAdapter {
             }
         }
     }
-
+    @Override 
+    public void mouseMoved(MouseEvent e){
+        ViewFormContainer v =  (ViewFormContainer) e.getComponent();
+        v.setCursor(e.getX(),e.getY(),new Cursor(Cursor.HAND_CURSOR));
+    }
     /**
      * Méthode appelée lorsque le bouton de la souris est pressé sur un composant et que la souris est ensuite déplacée.
      * Déplace la forme en cours de déplacement en fonction de la position actuelle de la souris.

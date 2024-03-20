@@ -28,8 +28,8 @@ public class MoveCommand implements ICommand {
      * Initialise la commande avec la forme spécifiée et ses nouvelles positions.
      *
      * @param form La forme à déplacer.
-     * @param x La nouvelle position horizontale (X) de la forme.
-     * @param y La nouvelle position verticale (Y) de la forme.
+     * @param oldX La nouvelle position horizontale (X) de la forme.
+     * @param oldY La nouvelle position verticale (Y) de la forme.
      */
     public MoveCommand(AbstractForm form, int oldX, int oldY) {
         this.form = form;
