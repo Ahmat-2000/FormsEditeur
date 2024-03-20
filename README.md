@@ -3,7 +3,7 @@
 
 ## Description
 
-Jeu De Formes est un projet Java conçu pour illustrer l'utilisation de divers patterns de conception, notamment :
+Jeu De Formes est un projet Java conçu pour illustrer l'utilisation de divers patterns de conception, notamment 
 
 - Le pattern MVC
 - Le pattern Commande pour les actions de dessin 
@@ -12,7 +12,11 @@ Jeu De Formes est un projet Java conçu pour illustrer l'utilisation de divers p
 - Le pattern State
 - Méthode factory
 
-Ce projet permet aux utilisateurs de créer, déplacer, et modifier des formes géométriques simples telles que des cercles et des rectangles sur une interface graphique.
+## Utilisation
+
+L'application démarre avec une interface graphique où vous pouvez choisir entre ajouter des formes, les déplacer, les supprimer ou modifier leurs tailles. 
+
+Utilisez les boutons fournis dans l'interface pour interagir avec les formes.
 
 ### Structure du Projet
 
@@ -64,12 +68,6 @@ ant
 ```bash
 java -jar dist/JeuDeFormes-1.0.jar
 ```
-
-## Utilisation
-
-Le jeu démarre avec une interface graphique où vous pouvez choisir entre ajouter des formes, les déplacer, les supprimer ou modifier leurs tailles. 
-
-Utilisez les boutons fournis dans l'interface pour interagir avec les formes.
 
 ## Contribuer
 
