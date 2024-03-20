@@ -3,7 +3,11 @@
 
 ## Description
 
-Jeu De Formes est un projet Java conçu pour illustrer l'utilisation de divers patterns de conception, notamment le pattern Commande pour les actions de dessin, le pattern Observateur pour la mise à jour des vues, et le pattern Stratégie pour le positionnement des formes. Il permet aux utilisateurs de créer, déplacer, et modifier des formes géométriques simples telles que des cercles et des rectangles sur une interface graphique.
+Jeu De Formes est un projet Java conçu pour illustrer l'utilisation de divers patterns de conception, notamment 
+le pattern Commande pour les actions de dessin, le pattern Observateur pour la mise à jour des vues 
+le pattern Stratégie pour le positionnement des formes. 
+
+Ce projet permet aux utilisateurs de créer, déplacer, et modifier des formes géométriques simples telles que des cercles et des rectangles sur une interface graphique.
 
 ## Démarrage rapide
 
@@ -19,7 +23,7 @@ Pour exécuter le projet sur votre machine locale, suivez ces étapes.
 1. Clonez le dépôt sur votre machine locale :
 
 ```bash
-git clone [URL_DU_DEPOT]
+git clone git@github.com:Ahmat-2000/projetAnnuel.git
 ```
 
 2. Naviguez dans le dossier du projet :
@@ -54,7 +58,7 @@ Ce projet est distribué sous la Licence MIT. Voir le fichier `LICENSE` pour plu
 
 ## Contact
 
-Pour toute question ou suggestion, n'hésitez pas à contacter [Votre Nom] à [Votre Email].
+Pour toute question ou suggestion, n'hésitez pas à contacter Ahmat à ahmatmhtlouky@gmail.com.
 
 ## Remerciements
 
