@@ -27,13 +27,15 @@ public class CercleView extends AbstractFormView {
     @Override
     public void dessiner(Graphics g) {
         g = this.getStyleGraphics(g);
+        g.drawRect(forme.getX(),forme.getY(),forme.getWidth(),forme.getWidth());
         if (forme.isEditable()) {
             g.drawOval(forme.getX(),forme.getY(),forme.getWidth(),forme.getWidth());
             g.fillOval(forme.getWidth()/2 + forme.getX(), forme.getWidth()/2 + forme.getY(), 2, 2);
-            if (forme.isShowResize()) {
-                g.drawRect(forme.getX(),forme.getY(),forme.getWidth(),forme.getWidth());
-            }
+            // if (forme.isShowResize()) {
+            //     g.drawRect(forme.getX(),forme.getY(),forme.getWidth(),forme.getWidth());
+            // }
         }else{
+            // g.drawRect(forme.getX(),forme.getY(),forme.getWidth(),forme.getWidth());
             g.fillOval(forme.getX(),forme.getY(),forme.getWidth(),forme.getWidth());  
         }
 

@@ -43,11 +43,11 @@ public class ResizeState extends MouseAdapter {
             this.width = form.getWidth(); 
             this.height = form.getHeight();
             form.setDashed(true);
-            if (form.getWidth() + form.getX() <=  e.getX() + 20 && form.getWidth() + form.getX() >=  e.getX() - 20 &&
-                form.getHeight() + form.getY() <=  e.getY() + 20 && form.getHeight() + form.getY() >=  e.getY() - 20
+            if (form.getWidth() + form.getX() <=  e.getX() + 5 && form.getWidth() + form.getX() >=  e.getX() - 5 &&
+                form.getHeight() + form.getY() <=  e.getY() + 5 && form.getHeight() + form.getY() >=  e.getY() - 5
             ) {
                 resizable = true;
-                e.getComponent().setCursor(new Cursor(Cursor.SE_RESIZE_CURSOR));
+                //e.getComponent().setCursor(new Cursor(Cursor.SE_RESIZE_CURSOR));
             }
         }
     }
@@ -58,10 +58,16 @@ public class ResizeState extends MouseAdapter {
             if (f.onSurface(e.getX(),e.getY()) && f.isEditable()) {
                 f.setShowResize(true);
                 form = f;
+                if (form.getWidth() + form.getX() <=  e.getX() + 5 && form.getWidth() + form.getX() >=  e.getX() - 5 &&
+                    form.getHeight() + form.getY() <=  e.getY() + 5 && form.getHeight() + form.getY() >=  e.getY() - 5
+                ) {
+                    e.getComponent().setCursor(new Cursor(Cursor.SE_RESIZE_CURSOR));
+                }
                 break;
             }
             else {
-                f.setShowResize(false);    
+                f.setShowResize(false);
+                e.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         }
     }
@@ -73,7 +79,6 @@ public class ResizeState extends MouseAdapter {
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        System.out.println(resizable);
         if (form != null && resizable && e.getX() < e.getComponent().getWidth() - 2 && e.getY() < e.getComponent().getHeight() - 2) 
         { 
             form.resize(e.getX(), e.getY()); 
