@@ -4,6 +4,7 @@ import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import model.AbstractForm;
 import model.FormContainer;
 import model.RectangleModel;
 import model.commandPattern.CreateCommand;
@@ -18,7 +19,7 @@ public class DrawRectState extends MouseAdapter {
     /** Les coordonnées de la souris pour le début et la fin du dessin.*/
     private int initialX, initialY;
     /**  Le rectangle en cours de dessin.*/
-    private RectangleModel rectangle; 
+    private AbstractForm rectangle,formCollision; 
 
     /**
      * Constructeur de DrawRectState qui prend en paramètre le conteneur des formes.
@@ -37,7 +38,7 @@ public class DrawRectState extends MouseAdapter {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        rectangle = null; 
+        formCollision = null; 
         initialX = e.getX();
         initialY = e.getY();
         rectangle = new RectangleModel(initialX,initialY, 0,0);
@@ -66,7 +67,7 @@ public class DrawRectState extends MouseAdapter {
         if (rectangle.getX() > 0 && rectangle.getY() > 0 && width + rectangle.getX() < e.getComponent().getWidth() && height + rectangle.getY() < e.getComponent().getHeight()) {
             rectangle.setWidth(width); 
             rectangle.setHeight(height); 
-            this.formContainer.collisionDetection(rectangle);
+            formCollision = this.formContainer.collisionDetection(rectangle);
         }
     }
 
@@ -87,5 +88,8 @@ public class DrawRectState extends MouseAdapter {
             }
         }
         rectangle.setDashed(false);
+        if(formCollision != null){
+            formCollision.setCollision(false);
+        }
     }
 }

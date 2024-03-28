@@ -21,7 +21,7 @@ public class MoveState extends MouseAdapter {
     /** Les coordonnées de la souris lors du premier click.*/
     private int predX,predY;
     /** La forme en cours de déplacement. */
-    private AbstractForm form; 
+    private AbstractForm form, formCollision; 
     /**
      * Constructeur de MoveState qui prend en paramètre le conteneur des formes.
      * 
@@ -40,6 +40,7 @@ public class MoveState extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
         form = null;
+        formCollision = null;
         predX = e.getX();
         predY = e.getY();
         for (AbstractForm f : this.formContainer.getMainContainerList()) {
@@ -74,7 +75,7 @@ public class MoveState extends MouseAdapter {
                 form.moveForm(dx,dy); 
                 predX = e.getX();
                 predY = e.getY();
-                this.formContainer.collisionDetection(form);
+                formCollision = this.formContainer.collisionDetection(form);
             }
         }
     }
@@ -98,6 +99,10 @@ public class MoveState extends MouseAdapter {
             }
             form.setDashed(false);
             form.setCollision(false);
+            if(formCollision != null){
+                formCollision.setCollision(false);
+            }
         }
+        
     }
 }

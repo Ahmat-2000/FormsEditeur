@@ -18,7 +18,7 @@ public class ResizeState extends MouseAdapter {
     /** Les dimensions initiales de la forme avant redimensionnement. */
     private int width, height; 
     /** La forme en cours de redimensionnement. */
-    private AbstractForm form;
+    private AbstractForm form,formCollision;
 
     private boolean resizable = false;
 
@@ -54,6 +54,7 @@ public class ResizeState extends MouseAdapter {
     @Override 
     public void mouseMoved(MouseEvent e){
         form = null;
+        formCollision = null;
         for (AbstractForm f : this.formContainer.getMainContainerList()) {
             if (f.onSurface(e.getX(),e.getY()) && f.isEditable()) {
                 f.setShowResize(true);
@@ -82,7 +83,7 @@ public class ResizeState extends MouseAdapter {
         if (form != null && resizable && e.getX() < e.getComponent().getWidth() - 2 && e.getY() < e.getComponent().getHeight() - 2) 
         { 
             form.resize(e.getX(), e.getY()); 
-            this.formContainer.collisionDetection(form);
+            formCollision = this.formContainer.collisionDetection(form);
         }
     }
     
@@ -106,5 +107,8 @@ public class ResizeState extends MouseAdapter {
         }
         e.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         resizable = false;
+        if(formCollision != null){
+            formCollision.setCollision(false);
+        }
     }
 }

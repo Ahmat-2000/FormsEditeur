@@ -4,6 +4,7 @@ import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import model.AbstractForm;
 import model.CercleModel;
 import model.FormContainer;
 import model.commandPattern.CreateCommand;
@@ -18,7 +19,7 @@ public class DrawCercleState extends MouseAdapter {
     /** Les coordonnées de la souris pour le début et la fin du dessin.*/
     private int centerX, centerY;
     /** Le cercle en cours de dessin. */
-    private CercleModel cercle; 
+    private AbstractForm cercle,formCollision; 
 
     /**
      * Constructeur de DrawCercleState qui prend en paramètre le conteneur des formes.
@@ -37,6 +38,7 @@ public class DrawCercleState extends MouseAdapter {
      */
     @Override
     public void mousePressed(MouseEvent e) {
+        formCollision = null;
         centerX = e.getX();
         centerY = e.getY();
         cercle = new CercleModel(centerX,centerY, 0);
@@ -59,7 +61,7 @@ public class DrawCercleState extends MouseAdapter {
         if (baseX > 0 && baseY > 0 && baseX + radius < e.getComponent().getWidth() && baseY + radius < e.getComponent().getHeight()) {
             cercle.setX(baseX); cercle.setY(baseY);
             cercle.setWidth(2*radius);
-            this.formContainer.collisionDetection(cercle);
+            formCollision = this.formContainer.collisionDetection(cercle);      
         }
     }
     @Override 
@@ -80,6 +82,9 @@ public class DrawCercleState extends MouseAdapter {
             if ( !cercle.isCollision() && cercle.getHeight() >= 10 && cercle.getWidth() >= 10 ) {
                 CreateCommand command = new CreateCommand(cercle, formContainer); 
                 command.executeCommand(); 
+            }
+            if(formCollision != null){
+                formCollision.setCollision(false);
             }
         }
         cercle.setDashed(false);

@@ -84,14 +84,18 @@ public class FormContainer extends AbstractListenableModel implements ModelListe
     public ArrayList<AbstractForm> getMainContainerList() {
         return this.mainContainerList;
     }
-    public void collisionDetection(AbstractForm form){
+    public AbstractForm collisionDetection(AbstractForm form){
         form.setCollision(false);   
-            for (AbstractForm fo : this.mainContainerList) {
-                if (fo != form && form.collision(fo)) { 
-                    form.setCollision(true);   
-                    break; // Quitte la boucle dès qu'une collision est détectée.
-                }  
-            }
+        for (AbstractForm fo : this.mainContainerList) {
+            fo.setCollision(false);   
+            if (fo != form && form.collision(fo)) { 
+                form.setCollision(true);   
+                fo.setCollision(true);   
+                return fo;
+                // break; // Quitte la boucle dès qu'une collision est détectée.
+            }  
+        }
+        return null;
     }
     /**
      * Réagit aux changements signalés par une forme spécifique contenue dans le conteneur.
