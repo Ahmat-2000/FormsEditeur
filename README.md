@@ -70,17 +70,7 @@ java -jar dist/JeuDeFormes-1.0.jar
 
 ## Diagrame
 
-![Global](src/images/Diagram.jpeg)
-
-![Command](src/images/commande.jpeg)
-
-![Observer](src/images/observer.jpeg)
-
-![State](src/images/state.jpeg)
-
-![Strategy](src/images/strategy.jpeg)
-
-![Factory](src/images/factory.jpeg)
+![Diagrame](src/images/Diagram.jpeg)
 
 ## Contribuer
 
