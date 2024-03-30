@@ -32,11 +32,6 @@ Le projet est organisé comme suit :
 ├── src    Contient les sources du projet, y compris les contrôleurs, modèles et vues.
 ├── test   Contient les tests unitaires pour le projet.
 ```
-
-## Diagrame
-
-![diagram](src/images/Diagram.jpeg)
-
 ### Démarrage rapide
 
 Pour lancer l'application, suivez ces instruction
@@ -72,6 +67,20 @@ ant
 ```bash
 java -jar dist/JeuDeFormes-1.0.jar
 ```
+
+## Diagrame
+
+![Global](src/images/Diagram.jpeg)
+
+![Command](src/images/commande.jpeg)
+
+![Observer](src/images/observer.jpeg)
+
+![State](src/images/state.jpeg)
+
+![Strategy](src/images/strategy.jpeg)
+
+![Factory](src/images/factory.jpeg)
 
 ## Contribuer
 
