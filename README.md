@@ -6,19 +6,13 @@
 C'est un projet pédagogique Java qui met en lumière l'utilisation de divers patterns de conception fondamentaux. 
 À travers ce jeu, vous découvrirez comment ces patterns s'articulent pour créer une application cohérente et extensible.
 
+### Les patterns mis en avant 
 - MVC (Modèle-Vue-Contrôleur) : Ce pattern structure l'application en trois composants distincts : le modèle gère les données, la vue affiche les données et le contrôleur gère les interactions entre l'utilisateur et l'application.
 - Commande : Ce pattern encapsule les actions de dessin sous forme d'objets "commande". Cela permet de les exécuter, annuler et rejouer facilement.
 - Observateur : Ce pattern assure la communication entre les objets. Lorsqu'un objet change d'état, les objets observateurs en sont notifiés et mettent à jour leur affichage en conséquence.
 - Stratégie : Ce pattern permet de définir différentes algorithmes de positionnement des formes, offrant ainsi une grande flexibilité à l'application.
 - State : Ce pattern permet de représenter l'état interne d'un objet et de le modifier de manière contrôlée.
 - Méthode Factory : Ce pattern permet de créer des objets d'une manière flexible, en cachant la complexité de l'instanciation au client.
-
-- Le pattern MVC
-- Le pattern Commande pour les actions de dessin 
-- Le pattern Observateur pour la mise à jour des vues 
-- Le pattern Stratégie pour le positionnement des formes.
-- Le pattern State
-- Méthode factory
 
 ## Utilisation
 
